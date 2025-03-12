@@ -33,6 +33,11 @@ namespace Eventify.Database.DbContext
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Role>().HasData(
+                new Role { Id = 1, Name = "Admin" },
+                new Role { Id = 2, Name = "User" }
+            );
+
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Role)
                 .WithMany(r => r.Users)
