@@ -52,13 +52,13 @@ namespace Eventify.Database.DbContext
                 .HasOne(er => er.Event)
                 .WithMany(e => e.EventReviews)
                 .HasForeignKey(er => er.EventId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<EventReview>()
                 .HasOne(er => er.User)
                 .WithMany(u => u.EventReviews)
                 .HasForeignKey(er => er.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<EventSchedule>()
                 .HasOne(es => es.Event)
@@ -69,13 +69,13 @@ namespace Eventify.Database.DbContext
                 .HasOne(ep => ep.Event)
                 .WithMany(e => e.EventParticipants)
                 .HasForeignKey(ep => ep.EventId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<EventParticipant>()
                 .HasOne(ep => ep.User)
                 .WithMany(u => u.EventParticipants)
                 .HasForeignKey(ep => ep.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
