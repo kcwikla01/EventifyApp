@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Eventify.Database.Migrations
 {
     [DbContext(typeof(EventifyDbContext))]
-    [Migration("20250312220954_InitialMigration")]
+    [Migration("20250313114151_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
