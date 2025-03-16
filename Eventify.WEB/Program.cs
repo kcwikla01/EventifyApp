@@ -1,4 +1,8 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Eventify.Database.DbContext;
+using Eventify.WEB.Autofac;
+using System.ComponentModel;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +13,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<EventifyDbContext>();
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
+{
+    builder.RegisterModule(new AutofacModule());
+});
 
 var app = builder.Build();
 

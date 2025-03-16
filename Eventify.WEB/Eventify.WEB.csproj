@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="8.2.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="10.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.3">
@@ -18,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Eventify.Database\Eventify.Database.csproj" />
+    <ProjectReference Include="..\Eventify.Frontend\Eventify.Frontend.esproj" />
     <ProjectReference Include="..\Eventify\Eventify.csproj" />
   </ItemGroup>
 
