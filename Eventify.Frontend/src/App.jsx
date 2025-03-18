@@ -1,35 +1,59 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './components/HomePage';
+import './App.scss';
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [isDarkMode, setIsDarkMode] = useState(false);
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    useEffect(() => {
+        const savedMode = localStorage.getItem('darkMode');
+        if (savedMode) {
+            setIsDarkMode(savedMode === 'true');
+        }
+    }, []);
+
+    useEffect(() => {
+        document.body.classList.toggle('dark-mode', isDarkMode);
+        localStorage.setItem('darkMode', isDarkMode);
+    }, [isDarkMode]);
+
+    // Funkcja do prze³¹czania trybu
+    const toggleTheme = () => {
+        setIsDarkMode(!isDarkMode);
+    };
+
+    return (
+        <Router>
+            <div className="App">
+                <div className="theme-toggle">
+                    <label className="switch">
+                        <input
+                            type="checkbox"
+                            checked={isDarkMode}
+                            onChange={toggleTheme}
+                        />
+                        <span className="slider">
+                            <div className="icon-container">
+                                {/* Ikona w suwaku */}
+                                {isDarkMode ? (
+                                    <i className="fas fa-moon"></i>
+                                ) : (
+                                    <i className="fas fa-sun"></i>
+                                )}
+                            </div>
+                        </span>
+                    </label>
+                </div>
+
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/register" element={<div>Register Page</div>} />
+                    <Route path="/login" element={<div>Login Page</div>} />
+                </Routes>
+            </div>
+        </Router>
+    );
 }
 
-export default App
+export default App;

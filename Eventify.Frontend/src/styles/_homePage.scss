@@ -1,0 +1,296 @@
+.home-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Pasek menu */
+    .menu-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 20px;
+        background-color: #1e88e5;
+        color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        /* Styl tytu³u */
+        .menu-bar__title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-left: 20px;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        /* Dropdown menu - ukryte na pocz¹tku */
+        .menu-bar__dropdown {
+            position: absolute;
+            top: 35px;
+            right: 0;
+            background-color: #fff;
+            color: #213547;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 200;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0s 0.3s;
+        }
+        /* Gdy dropdown ma klasê 'show', stanie siê widoczny */
+        .menu-bar__dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.3s ease, visibility 0s 0s;
+        }
+        /* Styl przycisków w dropdown */
+        .menu-bar__dropdown button {
+            background-color: #1e88e5;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu-bar__dropdown button:hover {
+            background-color: rgba(30, 136, 229, 0.8);
+        }
+        /* Styl tekstu w dropdown */
+        .menu-bar__dropdown-text {
+            font-size: 1rem;
+            text-align: center;
+
+            a {
+                color: #1e88e5;
+                text-decoration: none;
+                font-weight: bold;
+            }
+        }
+    }
+    /* Image Styling */
+    .home-page__image {
+        width: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 80vh;
+        z-index: -1;
+        opacity: 0.8;
+        transition: opacity 0.3s ease;
+    }
+    /* Kontener z zawartoœci¹ */
+    .home-page__container {
+        max-width: 600px;
+        padding: 40px;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        transition: background 0.3s ease, color 0.3s ease;
+        margin-top: 540px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .home-page__title {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        font-weight: bold;
+        transition: color 0.3s ease;
+    }
+
+    .home-page__description {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        transition: color 0.3s ease;
+    }
+
+    .home-page__buttons {
+        display: flex;
+        justify-content: space-around;
+        gap: 20px;
+        transition: color 0.3s ease;
+    }
+    /* Kontener z zawartoœci¹ o nas */
+    .home-page__about-us {
+        text-align: center;
+        margin-top: 150px;
+        position: relative;
+        padding-bottom: 100px;
+        min-height: 500px;
+    }
+
+    .home-page__about-us-title {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+
+    .home-page__arrow {
+        position: absolute;
+        transform: translateY(-50%);
+        font-size: 2rem;
+        color: #1e88e5;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+    .home-page__arrow:hover {
+        color: #ff4081;
+    }
+
+    .home-page__arrow:first-child {
+        left: 20px;
+    }
+
+    .home-page__arrow:last-child {
+        right: 20px;
+    }
+
+    .home-page__content {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin-top: 30px;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .content-container {
+        width: 250px;
+        padding: 30px;
+        background-color: #f4f4f4;
+        border-radius: 10px;
+        opacity: 0.6;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        text-align: center;
+        transform: scale(0.9);
+        transition: transform 0.5s ease, opacity 0.5s ease;
+    }
+
+    .content-container.center {
+        opacity: 1;
+        transform: scale(1.2);
+        z-index: 2;
+        background-color: #ff4081;
+        color: white;
+    }
+    /* Tryb jasny */
+    .content-container.side {
+        width: 200px;
+        opacity: 0.5;
+        transform: scale(0.8);
+        background-color: #f4f4f4;
+        color: #213547;
+    }
+    /* Tryb ciemny */
+    body.dark-mode .content-container.side {
+        background-color: rgba(33, 53, 71, 0.5);
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+
+
+    .content-container.transitioning {
+        opacity: 0.3;
+        transform: scale(0.6);
+    }
+
+    .content-container h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    .content-container p {
+        font-size: 1rem;
+        color: #333;
+    }
+    /* Tryb Jasny */
+    body:not(.dark-mode) & {
+        color: #213547;
+    }
+
+    body.dark-mode & {
+        color: #ffffff;
+    }
+
+    body:not(.dark-mode) &__container {
+        background: rgba(255, 255, 255, 0.8);
+    }
+
+    body.dark-mode &__container {
+        background: rgba(0, 0, 0, 0.9);
+    }
+
+    body:not(.dark-mode) &__title {
+        color: #213547;
+    }
+
+    body.dark-mode &__title {
+        color: #ffffff;
+    }
+
+    body:not(.dark-mode) &__description {
+        color: rgba(33, 53, 71, 0.8);
+    }
+
+    body.dark-mode &__description {
+        color: rgba(255, 255, 255, 0.8);
+    }
+}
+
+.btn {
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &.btn--primary {
+        background-color: #ff4081;
+        color: white;
+    }
+
+    &.btn--secondary {
+        background-color: #1e88e5;
+        color: white;
+    }
+
+    body.dark-mode &.btn--primary {
+        background-color: #ff4081;
+    }
+
+    body.dark-mode &.btn--secondary {
+        background-color: #1e88e5;
+    }
+
+    body.dark-mode &.btn--primary,
+    body.dark-mode &.btn--secondary {
+        color: #fff;
+    }
+
+    
+}

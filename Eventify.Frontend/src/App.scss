@@ -1,0 +1,100 @@
+/* Stylizacja przycisku prze³¹cznika */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    left: 150px;
+    z-index: 1000;
+    transform: scale(1.2);
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Stylowanie suwaka */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+/* Zamiast kropki - ikona w suwaku */
+.slider .icon-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: #fff;
+    transition: transform 0.4s ease, color 0.3s ease;
+    pointer-events: none;
+}
+
+/* Zmiana koloru suwaka po klikniêciu */
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+/* Animacja przesuniêcia ikony w suwaku */
+input:checked + .slider .icon-container {
+    transform: translate(-50%, -50%) translateX(26px);
+}
+
+body:not(.dark-mode) .slider .icon-container {
+    transform: translate(-50%, -50%) translateX(13px);
+}
+
+body.dark-mode .slider .icon-container {
+    transform: translate(-50%, -50%) translateX(-13px);
+}
+
+/* Kolor ikon w zale¿noœci od trybu */
+body.dark-mode .slider .icon-container i {
+    color: white;
+}
+
+body:not(.dark-mode) .slider .icon-container i {
+    color: #ffcc00;
+}
+
+/* Zmiana koloru kó³ka w zale¿noœci od trybu */
+body:not(.dark-mode) .slider:before {
+    background-color: white;
+}
+
+body.dark-mode .slider:before {
+    background-color: black;
+}
+
+/* Zmiana t³a na ¿ó³te w trybie jasnym */
+body:not(.dark-mode) .switch input:checked + .slider {
+    background-color: yellow;
+}
+
+/* Zmiana t³a na czarne w trybie ciemnym */
+body.dark-mode .switch input:checked + .slider {
+    background-color: black;
+}
+
+body:not(.dark-mode) .switch input:not(:checked) + .slider {
+    background-color: white;
+}
+
+body.dark-mode .switch input:not(:checked) + .slider {
+    background-color: black;
+}
