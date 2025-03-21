@@ -57,12 +57,13 @@ namespace Eventify.WEB.ApplicationServices
             {
                 return new NotFoundObjectResult("User with this email or name not exist");
             }
-
-           bool isChanged =  await _manageUsersUoW.ChangePassword(userDto, newPassword);
+            
+            bool isChanged =  await _manageUsersUoW.ChangePassword(userDto, newPassword);
 
            if (isChanged)
            {
-               return new OkObjectResult("Password is updated");
+               userDto.Password = newPassword;
+               return new OkObjectResult(userDto);
            }
 
            return new NotFoundObjectResult(
