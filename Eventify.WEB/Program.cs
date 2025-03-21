@@ -4,6 +4,8 @@ using Eventify.Database.DbContext;
 using Eventify.WEB.Autofac;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
+using AutoMapper;
+using Eventify.Automapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddAutoMapper(typeof(MapperProfile));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<EventifyDbContext>();
@@ -39,5 +42,4 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
 app.Run();

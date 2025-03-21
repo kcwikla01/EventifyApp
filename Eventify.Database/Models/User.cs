@@ -15,8 +15,8 @@ namespace Eventify.Database.Models
         public string Password { get; set; }
         public int RoleId { get; set; }
         public Role Role { get; set; }
-        public ICollection<Event> OwnedEvents { get; set; }
-        public ICollection<EventParticipant> EventParticipants { get; set; }
-        public ICollection<EventReview> EventReviews { get; set; }
+        public ICollection<Event> OwnedEvents { get; set; } = new List<Event>();
+        public ICollection<EventParticipant> EventParticipants { get; set; } = new List<EventParticipant>();
+        public ICollection<EventReview> EventReviews { get; set; } = new List<EventReview>();
     }
 }
