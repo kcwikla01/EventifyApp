@@ -5,6 +5,8 @@ namespace Eventify.WEB.ApplicationServices.Base
 {
     public interface IUserApplicationService
     {
-        public IActionResult CreateUser(UserDto userDto);
+        Task<IActionResult> CreateUser(UserDto userDto);
+        Task<IActionResult> GetUserById(int id);
+        Task<IActionResult> ChangePassword(UserDto userDto, string newPassword);
     }
 }
