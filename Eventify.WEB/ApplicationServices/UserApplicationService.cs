@@ -63,7 +63,7 @@ namespace Eventify.WEB.ApplicationServices
            if (isChanged)
            {
                userDto.Password = newPassword;
-               return new OkObjectResult(userDto);
+               return new OkObjectResult("Password changed");
            }
 
            return new NotFoundObjectResult(
