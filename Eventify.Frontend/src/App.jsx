@@ -1,15 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './components/HomePage';
+import RegisterPage from './components/RegisterPage';
+import LoginPage from './components/LoginPage';
+import englishFlag from './assets/eng.png';
+import polishFlag from './assets/pol.png';
 import './App.scss';
 
 function App() {
     const [isDarkMode, setIsDarkMode] = useState(false);
+    const [language, setLanguage] = useState('en');
 
     useEffect(() => {
         const savedMode = localStorage.getItem('darkMode');
         if (savedMode) {
             setIsDarkMode(savedMode === 'true');
+        }
+
+        const savedLanguage = localStorage.getItem('language');
+        if (savedLanguage) {
+            setLanguage(savedLanguage);
         }
     }, []);
 
@@ -18,38 +28,63 @@ function App() {
         localStorage.setItem('darkMode', isDarkMode);
     }, [isDarkMode]);
 
-    // Funkcja do prze³¹czania trybu
     const toggleTheme = () => {
         setIsDarkMode(!isDarkMode);
+    };
+
+    const changeLanguage = (lang) => {
+        console.log(`Changing language to: ${lang}`);
+        setLanguage(lang);
+        localStorage.setItem('language', lang);
     };
 
     return (
         <Router>
             <div className="App">
-                <div className="theme-toggle">
-                    <label className="switch">
-                        <input
-                            type="checkbox"
-                            checked={isDarkMode}
-                            onChange={toggleTheme}
+                <div className="menu-bar">
+                    <h1 className="menu-bar__title">Eventify</h1>
+                    <div className="theme-toggle">
+                        <label className="switch">
+                            <input
+                                type="checkbox"
+                                checked={isDarkMode}
+                                onChange={toggleTheme}
+                            />
+                            <span className="slider">
+                                <div className="icon-container">
+                                    {isDarkMode ? (
+                                        <i className="fas fa-moon"></i>
+                                    ) : (
+                                        <i className="fas fa-sun"></i>
+                                    )}
+                                </div>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                {/* Language Switch placed outside the menu-bar */}
+                <div className="language-switch">
+                    <div onClick={() => changeLanguage('en')} className="language-option">
+                        <img
+                            src={englishFlag} 
+                            alt="English"
+                            className="flag"
                         />
-                        <span className="slider">
-                            <div className="icon-container">
-                                {/* Ikona w suwaku */}
-                                {isDarkMode ? (
-                                    <i className="fas fa-moon"></i>
-                                ) : (
-                                    <i className="fas fa-sun"></i>
-                                )}
-                            </div>
-                        </span>
-                    </label>
+                    </div>
+                    <div onClick={() => changeLanguage('pl')} className="language-option">
+                        <img
+                            src={polishFlag}
+                            alt="Polski"
+                            className="flag"
+                        />
+                    </div>
                 </div>
 
                 <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/register" element={<div>Register Page</div>} />
-                    <Route path="/login" element={<div>Login Page</div>} />
+                    <Route path="/" element={<HomePage language={language} />} />
+                    <Route path="/register" element={<RegisterPage language={language} />} />
+                    <Route path="/login" element={<LoginPage language={language} />} />
                 </Routes>
             </div>
         </Router>

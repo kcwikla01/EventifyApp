@@ -1,0 +1,202 @@
+body {
+    background: linear-gradient(135deg, #f9f9f9, #e6e6e6);
+    transition: background 0.3s ease-in-out;
+}
+
+body.dark-mode {
+    background: linear-gradient(135deg, #0d0d1a, #1a1a2e);
+    color: #e0e0e0;
+}
+
+.register-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    transition: background 0.3s ease-in-out;
+
+    .toggle-mode {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: none;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+        color: #333;
+        transition: color 0.3s ease-in-out;
+
+        &:hover {
+            color: #ff4081;
+        }
+
+        body.dark-mode & {
+            color: #e0e0e0;
+        }
+    }
+
+    .register-container {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 40px;
+        width: 400px;
+        max-width: 90%;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        transition: all 0.3s ease-in-out;
+
+        body.dark-mode & {
+            background: rgba(35, 39, 65, 0.95);
+            color: #f5f5f5;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+    }
+
+    .register-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: #222;
+
+        body.dark-mode & {
+            color: #ffffff;
+        }
+    }
+
+    .register-subtitle {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 20px;
+
+        body.dark-mode & {
+            color: #bbbbbb;
+        }
+    }
+
+    .register-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .input-group {
+        display: flex;
+        align-items: center;
+        background: #f5f5f5;
+        border-radius: 8px;
+        padding: 12px;
+        transition: background 0.3s ease-in-out;
+
+        body.dark-mode & {
+            background: #292d45;
+        }
+
+        &:focus-within {
+            background: #e0e0e0;
+
+            body.dark-mode & {
+                background: #3b3f62;
+            }
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: none;
+            background: none;
+            outline: none;
+            color: #333;
+            transition: color 0.3s ease-in-out;
+
+            body.dark-mode & {
+                color: #ffffff;
+            }
+
+            &::placeholder {
+                color: #999;
+
+                body.dark-mode & {
+                    color: #cccccc;
+                }
+            }
+        }
+    }
+
+    .register-btn {
+        background: linear-gradient(135deg, #ff4081, #ff80ab);
+        color: white;
+        padding: 12px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            background: linear-gradient(135deg, #e0005a, #ff4081);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 64, 129, 0.4);
+        }
+
+        body.dark-mode & {
+            background: linear-gradient(135deg, #4e54c8, #8f94fb);
+            color: #ffffff;
+
+            &:hover {
+                background: linear-gradient(135deg, #3a3f92, #5c62d6);
+                box-shadow: 0 5px 15px rgba(79, 85, 200, 0.5);
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .register-container {
+        padding: 35px;
+        width: 90%;
+    }
+
+    .register-title {
+        font-size: 2rem;
+    }
+
+    .register-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .input-field {
+        padding: 10px;
+        font-size: 1rem;
+    }
+
+    .register-btn {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .register-container {
+        padding: 25px;
+        width: 95%;
+    }
+
+    .register-title {
+        font-size: 1.8rem;
+    }
+
+    .register-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .input-field {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    .register-btn {
+        font-size: 0.9rem;
+    }
+}
