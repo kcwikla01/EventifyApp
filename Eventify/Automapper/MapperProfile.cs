@@ -21,6 +21,9 @@ namespace Eventify.Automapper
                 .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
                 .ForMember(dest => dest.RoleId, opt => opt.MapFrom(src => 2))
                 .ForMember(dest => dest.Role, opt => opt.Ignore());
+
+            CreateMap<Role, RoleDto>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
         }
     }
 }
