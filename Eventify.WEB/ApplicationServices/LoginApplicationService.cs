@@ -39,8 +39,10 @@ namespace Eventify.WEB.ApplicationServices
                 return new NotFoundObjectResult("Role not exist");
             }
 
+            var loginDto = _mapper.Map<LoginDto>(role);
+            loginDto.UserId = userPasswordCorrect.Id;
 
-            return new OkObjectResult(_mapper.Map<RoleDto>(role));
+            return new OkObjectResult(_mapper.Map<LoginDto>(role));
         }
     }
 }
