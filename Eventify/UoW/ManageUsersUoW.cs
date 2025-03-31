@@ -68,5 +68,23 @@ namespace Eventify.UoW
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<User> CheckIfUserPasswordCorrect(UserDto userDto)
+        {
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => (u.Name == userDto.Name || u.Email == userDto.Email));
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            if (user.Password.Equals( userDto.Password ))
+            {
+                return user;
+            }
+
+            return null;
+        }
     }
 }

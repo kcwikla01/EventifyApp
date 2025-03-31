@@ -14,5 +14,6 @@ namespace Eventify.UoW.Base
         Task<User> GetUserById(int id);
         Task<bool> CheckIfUserExist(UserDto user);
         Task<bool> ChangePassword(UserDto userDto, string newPassword);
+        Task<User> CheckIfUserPasswordCorrect(UserDto userDto);
     }
 }
