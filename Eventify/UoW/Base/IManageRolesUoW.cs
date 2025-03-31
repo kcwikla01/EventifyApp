@@ -8,7 +8,7 @@ using Eventify.Database.Models.Dto;
 
 namespace Eventify.UoW.Base
 {
-    public interface IManageRoleUoW
+    public interface IManageRolesUoW
     {
         Task<Role?> GetRoleName(int roleId);
     }

@@ -9,9 +9,9 @@ namespace Eventify.WEB.ApplicationServices
     public class LoginApplicationService : ILoginApplicationService
     {
         private readonly IManageUsersUoW _manageUsersUoW;
-        private readonly IManageRoleUoW _manageRoleUoW;
+        private readonly IManageRolesUoW _manageRoleUoW;
         private readonly IMapper _mapper;
-        public LoginApplicationService(IManageUsersUoW manageUsersUoW, IManageRoleUoW manageRoleUoW, IMapper mapper)
+        public LoginApplicationService(IManageUsersUoW manageUsersUoW, IManageRolesUoW manageRoleUoW, IMapper mapper)
         {
             _manageUsersUoW = manageUsersUoW;
             _manageRoleUoW = manageRoleUoW;

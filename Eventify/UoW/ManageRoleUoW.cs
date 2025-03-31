@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Eventify.UoW
 {
-    public class ManageRoleUoW : IManageRoleUoW
+    public class ManageRoleUoW : IManageRolesUoW
     {
         private EventifyDbContext _context;
         private IMapper _mapper;

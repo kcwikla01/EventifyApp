@@ -46,11 +46,6 @@ namespace Eventify.UoW
             return user;
         }
 
-        public Task<UserDto> UpdateUserById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<bool> CheckIfUserExist(UserDto userDto)
         {
             return await _context.Users
