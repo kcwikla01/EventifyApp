@@ -6,11 +6,11 @@ namespace Eventify.WEB.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class LoginController : Controller
+    public class AuthController : Controller
     {
         private readonly ILoginApplicationService _loginApplicationService;
 
-        public LoginController(ILoginApplicationService loginApplicationService)
+        public AuthController(ILoginApplicationService loginApplicationService)
         {
             _loginApplicationService = loginApplicationService;
         }
