@@ -12,8 +12,10 @@ namespace Eventify.WEB.Autofac
         {
             builder.RegisterType<UserApplicationService>().As<IUserApplicationService>();
             builder.RegisterType<ManageUsersUoW>().As<IManageUsersUoW>();
-            builder.RegisterType<ManageRoleUoW>().As<IManageRoleUoW>();
+            builder.RegisterType<ManageRoleUoW>().As<IManageRolesUoW>();
             builder.RegisterType<LoginApplicationService>().As<ILoginApplicationService>();
+            builder.RegisterType<EventApplicationService>().As<IEventApplicationService>();
+            builder.RegisterType<ManageEventsUoW>().As<IManageEventsUoW>();
         }
     }
 }
