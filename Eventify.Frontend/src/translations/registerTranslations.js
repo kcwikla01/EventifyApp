@@ -5,7 +5,10 @@ const registerTranslations = {
         usernamePlaceholder: "Username",
         emailPlaceholder: "Email",
         passwordPlaceholder: "Password",
-        registerButton: "Sign Up"
+        confirmPasswordPlaceholder: "Confirm Password",
+        passwordMismatchError: "Passwords must match",
+        registerButton: "Sign Up",
+        successMessage: "User created successfully. Welcome"
     },
     pl: {
         title: "Utworz swoje konto",
@@ -13,7 +16,10 @@ const registerTranslations = {
         usernamePlaceholder: "Nazwa uzytkownika",
         emailPlaceholder: "E-mail",
         passwordPlaceholder: "Haslo",
-        registerButton: "Zarejestruj sie"
+        confirmPasswordPlaceholder: "Powtorz haslo",
+        passwordMismatchError: "Hasla musza byc takie same",
+        registerButton: "Zarejestruj sie",
+        successMessage: "Uzytkownik zostal utworzony pomyslnie. Witaj"
     }
 };
 

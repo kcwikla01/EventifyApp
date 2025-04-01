@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import './../styles/_homePage.scss';
-import yourImage from './../assets/image1.jpg';
-import 'font-awesome/css/font-awesome.min.css';
-import translations from './../translations/home';
-
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import "./../styles/_homePage.scss";
+import yourImage from "./../assets/image1.jpg";
+import "font-awesome/css/font-awesome.min.css";
+import translations from "./../translations/home";
 
 const HomePage = ({ language }) => {
     const [contentOrder, setContentOrder] = useState([1, 2, 3]);
@@ -16,7 +15,7 @@ const HomePage = ({ language }) => {
 
         setTimeout(() => {
             setContentOrder((prevOrder) => {
-                if (direction === 'next') {
+                if (direction === "next") {
                     return [prevOrder[1], prevOrder[2], prevOrder[0]];
                 } else {
                     return [prevOrder[2], prevOrder[0], prevOrder[1]];
@@ -46,21 +45,23 @@ const HomePage = ({ language }) => {
 
             <div className="home-page__about-us">
                 <h2 className="home-page__about-us-title">{translations[language].aboutUsTitle}</h2>
-                <div className="home-page__arrow" onClick={() => changeContent('prev')}>
-                    <i className="fas fa-arrow-left"></i>
-                </div>
+                <div className="home-page__content-wrapper">
+                    <button className="home-page__arrow left" onClick={() => changeContent("prev")}>
+                        <i className="fas fa-arrow-left"></i>
+                    </button>
 
-                <div className="home-page__content">
-                    {contentOrder.map((num, index) => (
-                        <div key={num} className={`content-container ${index === 1 ? 'center' : 'side'} ${isTransitioning ? 'transitioning' : ''}`}>
-                            <h3>{contentData[num].title}</h3>
-                            <p>{contentData[num].description}</p>
-                        </div>
-                    ))}
-                </div>
+                    <div className="home-page__content">
+                        {contentOrder.map((num, index) => (
+                            <div key={num} className={`content-container ${index === 1 ? "center" : "side"} ${isTransitioning ? "transitioning" : ""}`}>
+                                <h3>{contentData[num].title}</h3>
+                                <p>{contentData[num].description}</p>
+                            </div>
+                        ))}
+                    </div>
 
-                <div className="home-page__arrow" onClick={() => changeContent('next')}>
-                    <i className="fas fa-arrow-right"></i>
+                    <button className="home-page__arrow right" onClick={() => changeContent("next")}>
+                        <i className="fas fa-arrow-right"></i>
+                    </button>
                 </div>
             </div>
         </div>
