@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import RegisterPage from './components/RegisterPage';
 import LoginPage from './components/LoginPage';
+import UserDashboard from './components/UserDashboard';
 import englishFlag from './assets/eng.png';
 import polishFlag from './assets/pol.png';
 import './App.scss';
@@ -44,21 +45,20 @@ function App() {
                 <div className="menu-bar">
                     <h1 className="menu-bar__title">Eventify</h1>
                     <div className="theme-toggle">
+                        <div className="icon-container">
+                            {isDarkMode ? (
+                                <i className="fas fa-moon"></i>
+                            ) : (
+                                <i className="fas fa-sun"></i>
+                            )}
+                        </div>
                         <label className="switch">
                             <input
                                 type="checkbox"
                                 checked={isDarkMode}
                                 onChange={toggleTheme}
                             />
-                            <span className="slider">
-                                <div className="icon-container">
-                                    {isDarkMode ? (
-                                        <i className="fas fa-moon"></i>
-                                    ) : (
-                                        <i className="fas fa-sun"></i>
-                                    )}
-                                </div>
-                            </span>
+                            <span className="slider"></span>
                         </label>
                     </div>
                 </div>
@@ -67,7 +67,7 @@ function App() {
                 <div className="language-switch">
                     <div onClick={() => changeLanguage('en')} className="language-option">
                         <img
-                            src={englishFlag} 
+                            src={englishFlag}
                             alt="English"
                             className="flag"
                         />
@@ -85,6 +85,7 @@ function App() {
                     <Route path="/" element={<HomePage language={language} />} />
                     <Route path="/register" element={<RegisterPage language={language} />} />
                     <Route path="/login" element={<LoginPage language={language} />} />
+                    <Route path="/userDashboard" element={<UserDashboard language={language} />} />
                 </Routes>
             </div>
         </Router>
