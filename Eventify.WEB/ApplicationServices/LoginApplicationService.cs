@@ -42,7 +42,7 @@ namespace Eventify.WEB.ApplicationServices
             var loginDto = _mapper.Map<LoginDto>(role);
             loginDto.UserId = userPasswordCorrect.Id;
 
-            return new OkObjectResult(_mapper.Map<LoginDto>(role));
+            return new OkObjectResult(loginDto);
         }
     }
 }
