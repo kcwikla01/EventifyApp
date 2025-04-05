@@ -1,4 +1,4 @@
-const translations = {
+﻿const translations = {
     en: {
         title: "Welcome to Eventify",
         description: "A place to create, manage, and join amazing events. Let's get started!",
@@ -22,22 +22,22 @@ const translations = {
     },
     pl: {
         title: "Witaj w Eventify",
-        description: "Miejsce do tworzenia, zarzadzania i dolaczania do niesamowitych wydarzen. Zaczynajmy!",
-        registerButton: "Zarejestruj sie",
-        loginButton: "Zaloguj sie",
-        aboutUsTitle: "Wiecej o nas",
+        description: "Miejsce do tworzenia, zarządzania i dołączania do niesamowitych wydarzeń. Zaczynajmy!",
+        registerButton: "Zarejestruj się",
+        loginButton: "Zaloguj się",
+        aboutUsTitle: "Więcej o nas",
         content: {
             1: {
                 title: "Co to jest Eventify?",
-                description: "Eventify to platforma, ktora umozliwia uzytkownikom tworzenie, zarzadzanie i dolaczanie do niesamowitych wydarzen."
+                description: "Eventify to platforma, która umożliwia użytkownikom tworzenie, zarządzanie i dołączanie do niesamowitych wydarzeń."
             },
             2: {
-                title: "Dolacz do wydarzen",
-                description: "Odkrywaj i dolaczaj do wydarzen, ktore odpowiadaja Twoim zainteresowaniom. Lacz sie z ludzmi, dziel sie doswiadczeniami i tworz nowe wspomnienia."
+                title: "Dołącz do wydarzeń",
+                description: "Odkrywaj i dołączaj do wydarzeń, które odpowiadają Twoim zainteresowaniom. Łącz się z ludźmi, dziel się doświadczeniami i twórz nowe wspomnienia."
             },
             3: {
-                title: "Zarzadzanie wydarzeniami",
-                description: "Zarzadzaj swoimi wydarzeniami w prosty sposob za pomoca naszej przyjaznej platformy. Sledz gosci, planuj aktywnosci i wiele wiecej."
+                title: "Zarządzanie wydarzeniami",
+                description: "Zarządzaj swoimi wydarzeniami w prosty sposób za pomocą naszej przyjaznej platformy. Śledź gości, planuj aktywności i wiele więcej."
             }
         }
     }

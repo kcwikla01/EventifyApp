@@ -1,4 +1,4 @@
-const registerTranslations = {
+﻿const registerTranslations = {
     en: {
         title: "Create Your Account",
         subtitle: "Join us and explore amazing features",
@@ -11,15 +11,15 @@ const registerTranslations = {
         successMessage: "User created successfully. Welcome"
     },
     pl: {
-        title: "Utworz swoje konto",
-        subtitle: "Dolacz do nas i odkryj niesamowite funkcje",
-        usernamePlaceholder: "Nazwa uzytkownika",
+        title: "Utwórz swoje konto",
+        subtitle: "Dołącz do nas i odkryj niesamowite funkcje",
+        usernamePlaceholder: "Nazwa użytkownika",
         emailPlaceholder: "E-mail",
-        passwordPlaceholder: "Haslo",
-        confirmPasswordPlaceholder: "Powtorz haslo",
-        passwordMismatchError: "Hasla musza byc takie same",
-        registerButton: "Zarejestruj sie",
-        successMessage: "Uzytkownik zostal utworzony pomyslnie. Witaj"
+        passwordPlaceholder: "Hasło",
+        confirmPasswordPlaceholder: "Powtórz hasło",
+        passwordMismatchError: "Hasła muszą być takie same",
+        registerButton: "Zarejestruj się",
+        successMessage: "Użytkownik został utworzony pomyślnie. Witaj"
     }
 };
 

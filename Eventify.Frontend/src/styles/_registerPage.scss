@@ -151,6 +151,18 @@ body.dark-mode {
             }
         }
     }
+    .error-message {
+        color: #c0392b;
+        background-color: rgba(192, 57, 43, 0.1);
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-top: 10px;
+        padding: 8px;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(192, 57, 43, 0.3);
+        transition: all 0.3s ease-in-out;
+    }
 }
 
 @media (max-width: 768px) {
