@@ -10,5 +10,6 @@ namespace Eventify.WEB.ApplicationServices.Base
         Task<IActionResult> GetEvents();
         Task<IActionResult> GetEventsByOwnerId(int ownerId);
         Task<IActionResult> RemoveEventById(int id);
+        Task<IActionResult> UpdateEventById(EventDto eventDto);
     }
 }

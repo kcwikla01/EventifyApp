@@ -69,5 +69,28 @@ namespace Eventify.UoW
                 return false;
             }
         }
+
+        public async Task<Event> UpdateEvent(EventDto eventToUpdate)
+        {
+            var existingEvent = _context.Events.FirstOrDefault(e => e.Id == eventToUpdate.Id);
+           
+            existingEvent.Name = eventToUpdate.Name;
+            existingEvent.Description = eventToUpdate.Description;
+            existingEvent.StartDate = eventToUpdate.StartDate;
+            existingEvent.EndDate = eventToUpdate.EndDate;
+            existingEvent.OwnerId = eventToUpdate.OwnerId;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            return existingEvent;
+        }
     }
 }

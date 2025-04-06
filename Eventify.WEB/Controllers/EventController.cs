@@ -44,5 +44,11 @@ namespace Eventify.WEB.Controllers
         {
             return await _eventApplicationService.RemoveEventById(id);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateEventById(EventDto eventDto)
+        {
+            return await _eventApplicationService.UpdateEventById(eventDto);
+        }
     }
 }
