@@ -5,11 +5,11 @@ VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventify.WEB", "Eventify.WEB\Eventify.WEB.csproj", "{294D653E-D63F-4DCE-8568-64A9BC28D805}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Eventify.Frontend", "Eventify.Frontend\Eventify.Frontend.esproj", "{947DA6B3-3C90-4723-A6B2-E898BD37E7B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventify", "Eventify\Eventify.csproj", "{FA1F388B-97CE-4C0D-BCAD-243944FE5711}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventify", "Eventify\Eventify.csproj", "{FA1F388B-97CE-4C0D-BCAD-243944FE5711}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventify.Database", "Eventify.Database\Eventify.Database.csproj", "{596B229D-2D51-4728-94C4-820986AEF87C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventify.Database", "Eventify.Database\Eventify.Database.csproj", "{596B229D-2D51-4728-94C4-820986AEF87C}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Eventify.Frontend", "Eventify.Frontend\Eventify.Frontend.esproj", "{CB67AC8C-6B32-43E5-9BEA-F48BDB55A818}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,12 +21,6 @@ Global
 		{294D653E-D63F-4DCE-8568-64A9BC28D805}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{294D653E-D63F-4DCE-8568-64A9BC28D805}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{294D653E-D63F-4DCE-8568-64A9BC28D805}.Release|Any CPU.Build.0 = Release|Any CPU
-		{947DA6B3-3C90-4723-A6B2-E898BD37E7B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{947DA6B3-3C90-4723-A6B2-E898BD37E7B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{947DA6B3-3C90-4723-A6B2-E898BD37E7B4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{947DA6B3-3C90-4723-A6B2-E898BD37E7B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{947DA6B3-3C90-4723-A6B2-E898BD37E7B4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{947DA6B3-3C90-4723-A6B2-E898BD37E7B4}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{FA1F388B-97CE-4C0D-BCAD-243944FE5711}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FA1F388B-97CE-4C0D-BCAD-243944FE5711}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA1F388B-97CE-4C0D-BCAD-243944FE5711}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -35,6 +29,12 @@ Global
 		{596B229D-2D51-4728-94C4-820986AEF87C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{596B229D-2D51-4728-94C4-820986AEF87C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{596B229D-2D51-4728-94C4-820986AEF87C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB67AC8C-6B32-43E5-9BEA-F48BDB55A818}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB67AC8C-6B32-43E5-9BEA-F48BDB55A818}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB67AC8C-6B32-43E5-9BEA-F48BDB55A818}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{CB67AC8C-6B32-43E5-9BEA-F48BDB55A818}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB67AC8C-6B32-43E5-9BEA-F48BDB55A818}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB67AC8C-6B32-43E5-9BEA-F48BDB55A818}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
