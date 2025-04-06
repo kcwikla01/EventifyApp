@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import RegisterPage from './components/RegisterPage';
 import LoginPage from './components/LoginPage';
@@ -42,8 +42,12 @@ function App() {
     return (
         <Router>
             <div className="App">
+                <div className="app-title">
+                    <Link to="/">
+                        <h1>Eventify</h1>
+                    </Link>
+                </div>
                 <div className="menu-bar">
-                    <h1 className="menu-bar__title">Eventify</h1>
                     <div className="theme-toggle">
                         <div className="icon-container">
                             {isDarkMode ? (
@@ -63,7 +67,7 @@ function App() {
                     </div>
                 </div>
 
-                {/* Language Switch placed outside the menu-bar */}
+                {/* Prze³¹cznik jêzyka */}
                 <div className="language-switch">
                     <div onClick={() => changeLanguage('en')} className="language-option">
                         <img

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./../styles/_registerPage.scss";
 import registerTranslations from './../translations/registerTranslations';
 import CryptoJS from "crypto-js";
@@ -13,6 +14,9 @@ const RegisterPage = ({ language }) => {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
     const [passwordMatch, setPasswordMatch] = useState(true);
+
+    const navigate = useNavigate();
+    const translations = registerTranslations[language];
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -29,11 +33,8 @@ const RegisterPage = ({ language }) => {
             setError(registerTranslations[language].passwordMismatchError);
             return;
         }
-
-        // Generowanie deterministycznego has³a za pomoc¹ SHA-256
         const hashedPassword = CryptoJS.SHA256(formData.password).toString(CryptoJS.enc.Base64);
 
-        // Przygotowanie danych do wys³ania do backendu
         const userDto = {
             name: formData.username,
             email: formData.email,
@@ -57,6 +58,10 @@ const RegisterPage = ({ language }) => {
                 const responseData = await response.json();
                 setSuccess(`${translations.successMessage} ${responseData.name}!`);
                 setError(null);
+
+                setTimeout(() => {
+                    navigate("/login");
+                }, 1500);
             }
         } catch (err) {
             console.error("Error during registration:", err);
@@ -65,15 +70,12 @@ const RegisterPage = ({ language }) => {
         }
     };
 
-    const translations = registerTranslations[language];
-
     return (
         <div className="register-page">
             <div className="register-container">
                 <h1 className="register-title">{translations.title}</h1>
                 <p className="register-subtitle">{translations.subtitle}</p>
 
-                {/* Poka¿ komunikaty o b³êdach lub sukcesach */}
                 {error && <p className="error-message">{error}</p>}
                 {success && <p className="success-message">{success}</p>}
 
@@ -115,14 +117,16 @@ const RegisterPage = ({ language }) => {
                         <input
                             type="password"
                             name="confirmPassword"
-                            placeholder={translations.confirmPasswordPlaceholder}  
+                            placeholder={translations.confirmPasswordPlaceholder}
                             className="input-field"
                             value={formData.confirmPassword}
                             onChange={handleChange}
                             required
                         />
-                        {!passwordMatch && <p className="error-message">{translations.passwordMismatchError}</p>}  {/* Komunikat o b³êdzie */}
                     </div>
+
+                    {!passwordMatch && <p className="error-message">{translations.passwordMismatchError}</p>}
+
                     <button type="submit" className="register-btn" disabled={!passwordMatch}>
                         {translations.registerButton}
                     </button>

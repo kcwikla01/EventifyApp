@@ -6,18 +6,23 @@ const UserDashboard = ({ language }) => {
     const [availableEvents, setAvailableEvents] = useState([]);
     const [joinedEvents, setJoinedEvents] = useState([]);
 
+
     const translations = dashboardTranslations[language];
 
     useEffect(() => {
-        // Symulacja pobierania danych z API
+
+
+
+
+       
         setAvailableEvents([
-            { id: 1, name: "Tech Conference 2025", date: "2025-05-10" },
-            { id: 2, name: "Music Festival", date: "2025-06-15" },
-            { id: 3, name: "Startup Meetup", date: "2025-07-20" }
+            { id: 1, name: "Prz1", date: "2025-05-10" },
+            { id: 2, name: "Prz2", date: "2025-06-15" },
+            { id: 3, name: "Pry3", date: "2025-07-20" }
         ]);
 
         setJoinedEvents([
-            { id: 4, name: "Art Exhibition", date: "2025-04-12" }
+            { id: 4, name: "Przy4", date: "2025-04-12" }
         ]);
     }, []);
 

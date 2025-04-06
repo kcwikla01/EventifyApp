@@ -1,6 +1,7 @@
-const dashboardTranslations = {
+ï»¿const dashboardTranslations = {
     en: {
         title: "User Dashboard",
+        welcome: "Welcome",
         availableEvents: "Available Events",
         myEvents: "My Events",
         join: "Join",
@@ -8,12 +9,13 @@ const dashboardTranslations = {
         noJoinedEvents: "You haven't joined any events yet."
     },
     pl: {
-        title: "Panel U¿ytkownika",
-        availableEvents: "Dostêpne Wydarzenia",
+        title: "Panel UÅ¼ytkownika",
+        welcome: "Witaj",
+        availableEvents: "DostÄ™pne Wydarzenia",
         myEvents: "Moje Wydarzenia",
-        join: "Do³¹cz",
-        noAvailableEvents: "Brak dostêpnych wydarzeñ.",
-        noJoinedEvents: "Nie do³¹czy³eœ jeszcze do ¿adnych wydarzeñ."
+        join: "DoÅ‚Ä…cz",
+        noAvailableEvents: "Brak dostÄ™pnych wydarzeÅ„.",
+        noJoinedEvents: "Nie doÅ‚Ä…czyÅ‚eÅ› jeszcze do Å¼adnych wydarzeÅ„."
     }
 };
 
