@@ -15,5 +15,6 @@ namespace Eventify.UoW.Base
         Task<List<Event>> GetEvents();
         Task<List<Event>> GetEventsByOwnerId(int ownerId);
         Task<bool> removeEvent(Event eventToRemove);
+        Task<Event> UpdateEvent(EventDto eventToUpdate);
     }
 }

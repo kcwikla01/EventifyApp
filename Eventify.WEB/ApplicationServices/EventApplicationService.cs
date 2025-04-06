@@ -95,5 +95,34 @@ namespace Eventify.WEB.ApplicationServices
                 return new BadRequestObjectResult("Event not removed");
             }
         }
+
+        public async Task<IActionResult> UpdateEventById(EventDto eventDto)
+        {
+            var eventById = await _manageEventsUoW.GetEventById(eventDto.Id);
+
+            if (eventById == null)
+            {
+                return new NotFoundObjectResult("Event not exist");
+            }
+
+            if (eventDto.Validate())
+            {
+                var user = await _manageUsersUoW.GetUserById(eventDto.OwnerId);
+                if (user == null)
+                {
+                    return new NotFoundObjectResult("Owner not exist");
+                }
+
+                var updatedEvent = await _manageEventsUoW.UpdateEvent(eventDto);
+                var updatedEventDto = _mapper.Map<EventDto>(updatedEvent);
+                
+                return new OkObjectResult(updatedEventDto);
+            }
+            else
+            {
+                return new BadRequestObjectResult("Invalid data");
+            }
+
+        }
     }
 }
