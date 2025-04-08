@@ -23,5 +23,12 @@ namespace Eventify.Database.Models.Dto
             }
             return true;
         }
+
+        public bool ValidateDates()
+        {
+            if (StartDate == EndDate)
+                return false;
+            return StartDate < EndDate;
+        }
     }
 }
