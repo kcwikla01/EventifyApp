@@ -4,6 +4,7 @@ import HomePage from './components/HomePage';
 import RegisterPage from './components/RegisterPage';
 import LoginPage from './components/LoginPage';
 import UserDashboard from './components/UserDashboard';
+import AddEvent from './components/AddEvent';
 import englishFlag from './assets/eng.png';
 import polishFlag from './assets/pol.png';
 import './App.scss';
@@ -89,6 +90,7 @@ function App() {
                     <Route path="/" element={<HomePage language={language} />} />
                     <Route path="/register" element={<RegisterPage language={language} />} />
                     <Route path="/login" element={<LoginPage language={language} />} />
+                    <Route path="/addEvent" element={<AddEvent language={language} />} />
                     <Route path="/userDashboard" element={<UserDashboard language={language} />} />
                 </Routes>
             </div>

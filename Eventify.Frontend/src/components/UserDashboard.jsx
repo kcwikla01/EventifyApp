@@ -1,63 +1,103 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import "./../styles/_userDashboard.scss";
-import dashboardTranslations from './../translations/dashboardTranslations';
+import userDashboardTranslations from './../translations/userDashboardTranslations';
 
 const UserDashboard = ({ language }) => {
-    const [availableEvents, setAvailableEvents] = useState([]);
-    const [joinedEvents, setJoinedEvents] = useState([]);
+    const [events, setEvents] = useState([]);
+    const [userEvents, setUserEvents] = useState([]);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
+    const translations = userDashboardTranslations[language];
+    const ownerId = localStorage.getItem("userId");
 
+    const fetchUserEvents = useCallback(async () => {
+        try {
+            const response = await fetch(`https://localhost:7090/Event/GetEventsByOwnerId?ownerId=${ownerId}`);
+            if (!response.ok) {
+                throw new Error("Failed to fetch user events");
+            }
+            const data = await response.json();
+            setUserEvents(data);
+        } catch (err) {
+            setError(err.message);
+        }
+    }, [ownerId]);
 
-    const translations = dashboardTranslations[language];
+    const fetchAllEvents = async () => {
+        try {
+            const response = await fetch(`https://localhost:7090/Event/GetEvents`);
+            if (!response.ok) {
+                throw new Error("Failed to fetch events");
+            }
+            const data = await response.json();
+            setEvents(data);
+        } catch (err) {
+            setError(err.message);
+        }
+    };
 
     useEffect(() => {
+        fetchAllEvents();
+        fetchUserEvents();
+    }, [ownerId, fetchUserEvents]);
 
-
-
-
-       
-        setAvailableEvents([
-            { id: 1, name: "Prz1", date: "2025-05-10" },
-            { id: 2, name: "Prz2", date: "2025-06-15" },
-            { id: 3, name: "Pry3", date: "2025-07-20" }
-        ]);
-
-        setJoinedEvents([
-            { id: 4, name: "Przy4", date: "2025-04-12" }
-        ]);
-    }, []);
-
-    const joinEvent = (event) => {
-        setJoinedEvents([...joinedEvents, event]);
-        setAvailableEvents(availableEvents.filter(e => e.id !== event.id));
+    const handleAddEventClick = () => {
+        navigate("/addEvent");
     };
 
     return (
         <div className="user-dashboard">
-            <h1 className="dashboard-title">{translations.title}</h1>
+            <div className="dashboard-container">
+                <h1 className="dashboard-header">{translations.dashboardTitle}</h1>
 
-            <div className="events-section">
-                <h2 className="section-title">{translations.availableEvents}</h2>
-                <ul className="events-list">
-                    {availableEvents.length > 0 ? availableEvents.map(event => (
-                        <li key={event.id} className="event-item">
-                            <span>{event.name} - {event.date}</span>
-                            <button className="join-btn" onClick={() => joinEvent(event)}>
-                                {translations.join}
-                            </button>
-                        </li>
-                    )) : <p>{translations.noAvailableEvents}</p>}
-                </ul>
-            </div>
+                <button className="add-event-btn" onClick={handleAddEventClick}>
+                    {translations.addEventButton}
+                </button>
 
-            <div className="events-section">
-                <h2 className="section-title">{translations.myEvents}</h2>
-                <ul className="events-list">
-                    {joinedEvents.length > 0 ? joinedEvents.map(event => (
-                        <li key={event.id} className="event-item">
-                            <span>{event.name} - {event.date}</span>
-                        </li>
-                    )) : <p>{translations.noJoinedEvents}</p>}
-                </ul>
+                {error && <p className="error-message">{error}</p>}
+
+                <div className="events-section">
+                    <h2 className="section-title">{translations.allEventsTitle}</h2>
+                    {events.length > 0 ? (
+                        <ul>
+                            {events.map((event) => (
+                                <li key={event.id} className="event-item">
+                                    <h3 className="event-name">{event.name}</h3>
+                                    <p className="event-description">{event.description}</p>
+                                    <p className="event-date">
+                                        {new Date(event.startDate).toLocaleString()} -{" "}
+                                        {new Date(event.endDate).toLocaleString()}
+                                    </p>
+                                    <button className="view-details-btn">{translations.joinButton}</button>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p>{translations.noEventsFound}</p>
+                    )}
+                </div>
+
+                <div className="user-events-section">
+                    <h2 className="section-title">{translations.yourEventsTitle}</h2>
+                    {userEvents.length > 0 ? (
+                        <ul>
+                            {userEvents.map((event) => (
+                                <li key={event.id} className="event-item">
+                                    <h3 className="event-name">{event.name}</h3>
+                                    <p className="event-description">{event.description}</p>
+                                    <p className="event-date">
+                                        {new Date(event.startDate).toLocaleString()} -{" "}
+                                        {new Date(event.endDate).toLocaleString()}
+                                    </p>
+                                    <button className="view-details-btn">{translations.viewDetailsButton}</button>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p>{translations.noUserEvents}</p>
+                    )}
+                </div>
             </div>
         </div>
     );
