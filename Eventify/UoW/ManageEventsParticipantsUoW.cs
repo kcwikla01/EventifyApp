@@ -17,14 +17,16 @@ namespace Eventify.UoW
         private readonly EventifyDbContext _context;
         private readonly IManageMailUoW _manageMailUoW;
         private readonly IManageEventsUoW _manageEventsUoW;
+        private readonly IManageUsersUoW _manageUsersUoW;
         private readonly IMapper _mapper;
 
-        public ManageEventsParticipantsUoW(EventifyDbContext dbContext, IManageMailUoW manageMailUoW, IManageEventsUoW manageEventsUoW, IMapper mapper)
+        public ManageEventsParticipantsUoW(EventifyDbContext dbContext, IManageMailUoW manageMailUoW, IManageEventsUoW manageEventsUoW, IMapper mapper, IManageUsersUoW manageUsersUoW)
         {
             _context = dbContext;
             _manageMailUoW = manageMailUoW;
             _manageEventsUoW = manageEventsUoW;
             _mapper = mapper;
+            _manageUsersUoW = manageUsersUoW;
         }
 
         public async Task<EventParticipant> AddEventParticipant(EventParticipantDto eventParticipantDto)
@@ -40,6 +42,15 @@ namespace Eventify.UoW
             await _manageMailUoW.SendEventParticipantEmail(eventParticipantDto.UserId, eventParticipantDto.EventId);
 
             return eventParticipant;
+        }
+
+        public async Task<bool> CheckIfExistEventAndUser(EventParticipantDto eventParticipantDto)
+        {
+            var findedEvent = await _manageEventsUoW.GetEventById(eventParticipantDto.EventId);
+            var findedUser = await _manageUsersUoW.GetUserById(eventParticipantDto.UserId);
+            if(findedEvent != null && findedUser!= null)
+                return true;
+            return false;
         }
 
         public async Task<bool> CheckIfExistLink(EventParticipantDto eventParticipantDto)

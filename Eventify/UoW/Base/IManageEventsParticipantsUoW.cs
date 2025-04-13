@@ -11,6 +11,7 @@ namespace Eventify.UoW.Base
     public interface IManageEventsParticipantsUoW
     {
         Task<EventParticipant> AddEventParticipant(EventParticipantDto eventParticipantDto);
+        Task<bool> CheckIfExistEventAndUser(EventParticipantDto eventParticipantDto);
         Task<bool> CheckIfExistLink(EventParticipantDto eventParticipantDto);
         Task<List<EventDto>> GetAllEventsToWhichTheUserIsAssigned(int userId);
         bool RemoveEventParticipant(EventParticipantDto eventParticipantDto);

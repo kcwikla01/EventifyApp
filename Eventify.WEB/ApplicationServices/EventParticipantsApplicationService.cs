@@ -23,15 +23,23 @@ namespace Eventify.WEB.ApplicationServices
             }
             else
             {
-                var eventParticipant = await _manageEventsParticipantsUoW.AddEventParticipant(eventParticipantDto);
-
-                if (eventParticipant != null)
+                var IfExistEventAndUser = await _manageEventsParticipantsUoW.CheckIfExistEventAndUser(eventParticipantDto);
+                if (IfExistEventAndUser)
                 {
-                    return new OkObjectResult("Linked");
+                    var eventParticipant = await _manageEventsParticipantsUoW.AddEventParticipant(eventParticipantDto);
+
+                    if (eventParticipant != null)
+                    {
+                        return new OkObjectResult("Linked");
+                    }
+                    else
+                    {
+                        return new BadRequestObjectResult("Failed to add event participant.");
+                    }
                 }
                 else
                 {
-                    return new BadRequestObjectResult("Failed to add event participant.");
+                    return new BadRequestObjectResult("Event or user not exist");
                 }
             }
         }

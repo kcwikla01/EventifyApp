@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Eventify.UoW.Base;
 using MimeKit;
 using MailKit.Net.Smtp;
+using Microsoft.Extensions.Configuration;
 
 namespace Eventify.UoW
 {
@@ -15,11 +16,13 @@ namespace Eventify.UoW
     {
         private readonly IManageUsersUoW _manageUsersUoW;
         private readonly IManageEventsUoW _manageEventsUoW;
+        private readonly IConfiguration _configuration;
 
-        public ManageMailUoW(IManageUsersUoW manageUsersUoW, IManageEventsUoW manageEventsUoW)
+        public ManageMailUoW(IManageUsersUoW manageUsersUoW, IManageEventsUoW manageEventsUoW, IConfiguration configuration)
         {
             _manageUsersUoW = manageUsersUoW;
             _manageEventsUoW = manageEventsUoW;
+            _configuration = configuration;
         }
         public async Task<bool> SendEventParticipantEmail(int userId, int eventId)
         {
@@ -29,7 +32,7 @@ namespace Eventify.UoW
             if (findEvent != null && findUser != null)
             {
                 var message = new MimeMessage();
-                message.From.Add(new MailboxAddress("EventifyApp", "eventifyappproject@gmail.com"));
+                message.From.Add(new MailboxAddress(_configuration["MailConfiguration:Login"], _configuration["MailConfiguration:Email"]));
                 message.To.Add(new MailboxAddress(findUser.Name, findUser.Email));
                 message.Subject = "EventifyApp - Event Participation";
                 message.Body = new TextPart("plain")
@@ -42,7 +45,7 @@ namespace Eventify.UoW
                     try
                     {
                         await client.ConnectAsync("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-                        await client.AuthenticateAsync("eventifyappproject@gmail.com", "fxbk qfdv fnfn xinm");
+                        await client.AuthenticateAsync(_configuration["MailConfiguration:Email"], _configuration["MailConfiguration:AppPassword"]);
                         await client.SendAsync(message);
                         await client.DisconnectAsync(true);
                         return true;
