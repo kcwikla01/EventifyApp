@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import "./../styles/_addEventPage.scss";
-import addEventTranslations from './../translations/addEventTranslations';
+import updateEventTranslations from './../translations/updateEventTranslations';
 
-const AddEvent = ({ language }) => {
+const UpdateEvent = ({ language }) => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [startDate, setStartDate] = useState("");
@@ -11,7 +11,26 @@ const AddEvent = ({ language }) => {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
     const navigate = useNavigate();
-    const translations = addEventTranslations[language];
+    const { id } = useParams();
+    const translations = updateEventTranslations[language];
+
+    useEffect(() => {
+        const fetchEventData = async () => {
+            try {
+                const response = await fetch(`https://localhost:7090/Event/GetEventById?id=${id}`);
+                if (!response.ok) throw new Error("Failed to fetch event data");
+                const data = await response.json();
+                setName(data.name);
+                setDescription(data.description);
+                setStartDate(data.startDate.slice(0, 16));
+                setEndDate(data.endDate.slice(0, 16));
+            } catch (err) {
+                setError(err.message || translations.serverError);
+                setSuccess(null);
+            }
+        };
+        fetchEventData();
+    }, [id, translations.serverError]);
 
     const currentDate = new Date().toISOString().slice(0, 16);
 
@@ -33,6 +52,7 @@ const AddEvent = ({ language }) => {
         }
 
         const eventDto = {
+            id: parseInt(id),
             name,
             description,
             startDate,
@@ -41,8 +61,8 @@ const AddEvent = ({ language }) => {
         };
 
         try {
-            const response = await fetch(`https://localhost:7090/Event/CreateEvent`, {
-                method: "POST",
+            const response = await fetch(`https://localhost:7090/Event/UpdateEventById`, {
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -139,7 +159,7 @@ const AddEvent = ({ language }) => {
                     </div>
 
                     <button type="submit" className="submit-btn">
-                        {translations.createEventButton}
+                        {translations.updateEventButton}
                     </button>
                 </form>
             </div>
@@ -147,4 +167,4 @@ const AddEvent = ({ language }) => {
     );
 };
 
-export default AddEvent;
+export default UpdateEvent;

@@ -67,6 +67,11 @@ body.dark-mode .events-section, body.dark-mode .user-events-section {
 body.dark-mode .section-title {
     color: #ffffff;
 }
+.event-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
 
 .event-item {
     background: rgba(255, 255, 255, 0.95);
@@ -142,6 +147,39 @@ body.dark-mode .view-details-btn {
 body.dark-mode .view-details-btn:hover {
     background: linear-gradient(135deg, #3a3f92, #5c62d6);
     box-shadow: 0 5px 15px rgba(79, 85, 200, 0.5);
+}
+.update-event-btn,
+.remove-event-btn {
+    padding: 12px 18px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.update-event-btn {
+    background: linear-gradient(135deg, #4caf50, #81c784);
+    color: white;
+}
+
+.update-event-btn:hover {
+    background: linear-gradient(135deg, #388e3c, #66bb6a);
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+}
+
+.remove-event-btn {
+    background: linear-gradient(135deg, #f44336, #e57373);
+    color: white;
+}
+
+.remove-event-btn:hover {
+    background: linear-gradient(135deg, #c62828, #ef5350);
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(244, 67, 54, 0.4);
 }
 
 .add-event-btn {

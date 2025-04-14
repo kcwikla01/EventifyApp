@@ -16,7 +16,7 @@
         formTitle: "Utwórz Nowe Wydarzenie",
         formSubtitle: "Wypełnij dane, aby utworzyć wydarzenie",
         eventNamePlaceholder: "Nazwa Wydarzenia",
-        descriptionPlaceholder: "Opis (opcjonalnie)",
+        descriptionPlaceholder: "Opis",
         startDatePlaceholder: "Data Rozpoczęcia",
         endDatePlaceholder: "Data Zakończenia",
         createEventButton: "Utwórz Wydarzenie",

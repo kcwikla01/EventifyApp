@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "./../styles/_userDashboard.scss";
-import userDashboardTranslations from './../translations/userDashboardTranslations';
+import userDashboardTranslations from "./../translations/userDashboardTranslations";
 
 const UserDashboard = ({ language }) => {
     const [events, setEvents] = useState([]);
@@ -45,6 +45,21 @@ const UserDashboard = ({ language }) => {
     const handleAddEventClick = () => {
         navigate("/addEvent");
     };
+
+    const handleRemoveEvent = async (id) => {
+        try {
+            const response = await fetch(`https://localhost:7090/Event/RemoveEventById?id=${id}`, {
+                method: "DELETE",
+            });
+            if (!response.ok) {
+                throw new Error("Failed to remove event");
+            }
+            window.location.reload();
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
 
     return (
         <div className="user-dashboard">
@@ -90,7 +105,20 @@ const UserDashboard = ({ language }) => {
                                         {new Date(event.startDate).toLocaleString()} -{" "}
                                         {new Date(event.endDate).toLocaleString()}
                                     </p>
-                                    <button className="view-details-btn">{translations.viewDetailsButton}</button>
+                                    <div className="event-actions">
+                                        <button
+                                            className="update-event-btn"
+                                            onClick={() => navigate(`/updateEvent/${event.id}`)}
+                                        >
+                                            {translations.updateEventButton}
+                                        </button>
+                                        <button
+                                            className="remove-event-btn"
+                                            onClick={() => handleRemoveEvent(event.id)}
+                                        >
+                                            {translations.removeEventButton}
+                                        </button>
+                                    </div>
                                 </li>
                             ))}
                         </ul>
