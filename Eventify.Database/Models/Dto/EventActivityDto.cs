@@ -8,11 +8,12 @@ namespace Eventify.Database.Models.Dto
 {
     public class EventActivityDto
     {
-        public int eventId { get; set; }
-        public string activityName { get; set; }
-        public string activityDescription { get; set; }
-        public DateTime startTime { get; set; }
-        public DateTime endTime { get; set; }
+        public int ActivityId { get; set; }
+        public int EventId { get; set; }
+        public string ActivityName { get; set; }
+        public string ActivityDescription { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
     }
 
 
