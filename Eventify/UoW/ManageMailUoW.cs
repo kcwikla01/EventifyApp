@@ -37,7 +37,12 @@ namespace Eventify.UoW
                 message.Subject = "EventifyApp - Event Participation";
                 message.Body = new TextPart("plain")
                 {
-                    Text = $"Hello {findUser.Name},\n\nYou have successfully registered for the event: {findEvent.Name}.\n\nThank you for using EventifyApp!"
+                    Text = $"Hello {findUser.Name},\n\n" +
+                           $"You have successfully registered for the event: {findEvent.Name}.\n\n" +
+                           $"Event Details:\n" +
+                           $"Start Time: {findEvent.StartDate}\n" +
+                           $"Registration Time: {DateTime.Now}\n\n" +
+                           $"Thank you for using EventifyApp!"
                 };
 
                 using (var client = new MailKit.Net.Smtp.SmtpClient())
