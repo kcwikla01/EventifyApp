@@ -8,40 +8,42 @@ namespace Eventify.WEB.ApplicationServices
     public class EventParticipantsApplicationService : IEventParticipantsApplicationService
     {
         private readonly IManageEventsParticipantsUoW _manageEventsParticipantsUoW;
+        private readonly IManageEventsUoW _manageEventsUoW;
 
-        public EventParticipantsApplicationService(IManageEventsParticipantsUoW manageEventsParticipantsUoW)
+        public EventParticipantsApplicationService(IManageEventsParticipantsUoW manageEventsParticipantsUoW, IManageEventsUoW manageEventsUoW)
         {
             _manageEventsParticipantsUoW = manageEventsParticipantsUoW;
+            _manageEventsUoW = manageEventsUoW;
         }
 
         public async Task<IActionResult> AddEventParticipant(EventParticipantDto eventParticipantDto)
         {
+
             var checkIfExistThisLink = await _manageEventsParticipantsUoW.CheckIfExistLink(eventParticipantDto);
             if (checkIfExistThisLink)
             {
                 return new BadRequestObjectResult("Link exist");
             }
-            else
-            {
-                var IfExistEventAndUser = await _manageEventsParticipantsUoW.CheckIfExistEventAndUser(eventParticipantDto);
-                if (IfExistEventAndUser)
-                {
-                    var eventParticipant = await _manageEventsParticipantsUoW.AddEventParticipant(eventParticipantDto);
 
-                    if (eventParticipant != null)
-                    {
-                        return new OkObjectResult("Linked");
-                    }
-                    else
-                    {
-                        return new BadRequestObjectResult("Failed to add event participant.");
-                    }
-                }
-                else
-                {
-                    return new BadRequestObjectResult("Event or user not exist");
-                }
+            var ifExistEventAndUser = await _manageEventsParticipantsUoW.CheckIfExistEventAndUser(eventParticipantDto);
+            if (!ifExistEventAndUser)
+            {
+                return new BadRequestObjectResult("Event or user not exist");
             }
+
+            var findedEvent = await _manageEventsUoW.GetEventById(eventParticipantDto.EventId);
+            if (findedEvent.OwnerId.Equals(eventParticipantDto.UserId))
+            {
+                return new BadRequestObjectResult("You are the owner of this event");
+            }
+
+            var eventParticipant = await _manageEventsParticipantsUoW.AddEventParticipant(eventParticipantDto);
+            if (eventParticipant != null)
+            {
+                return new OkObjectResult("Linked");
+            }
+
+            return new BadRequestObjectResult("Failed to add event participant.");
         }
 
         public async Task<IActionResult> GetAllEventsToWhichTheUserIsAssigned(int userId)
