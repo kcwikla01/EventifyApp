@@ -7,7 +7,7 @@ namespace Eventify.WEB.ApplicationServices.Base
     {
         Task<IActionResult> RemoveActivity(int activityId);
         Task<IActionResult> GetAllActivitiesForEvent(int eventId);
-        Task<IActionResult> GetActivityInfo(int id);
+        Task<IActionResult> GetActivityInfo(int activityId);
         Task<IActionResult> AddEventShedules(EventActivityDto eventActivityDto);
     }
 }
