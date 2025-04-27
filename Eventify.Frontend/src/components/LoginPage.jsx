@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./../styles/_loginPage.scss";
 import loginTranslations from './../translations/loginTranslations';
@@ -12,6 +12,17 @@ const Login = ({ language }) => {
 
     const navigate = useNavigate();
     const translations = loginTranslations[language];
+
+    useEffect(() => {
+        const expiresAt = localStorage.getItem("expiresAt");
+        if (expiresAt && Date.now() < parseInt(expiresAt)) {
+            navigate("/userDashboard");
+        } else {
+            localStorage.removeItem("userId");
+            localStorage.removeItem("role");
+            localStorage.removeItem("expiresAt");
+        }
+    }, [navigate]);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -42,8 +53,12 @@ const Login = ({ language }) => {
             } else {
                 const data = await response.json();
 
+                const sessionDuration = 15 * 60 * 1000; 
+                const expiresAt = Date.now() + sessionDuration;
+
                 localStorage.setItem("userId", data.userId);
                 localStorage.setItem("role", data.roleName);
+                localStorage.setItem("expiresAt", expiresAt.toString());
 
                 setSuccess(`${translations.welcome}, ${username}!`);
                 setError(null);
@@ -52,7 +67,6 @@ const Login = ({ language }) => {
                     navigate("/userDashboard");
                 }, 1500);
             }
-
         } catch (err) {
             console.error("Login error:", err);
             setError(translations.serverError);

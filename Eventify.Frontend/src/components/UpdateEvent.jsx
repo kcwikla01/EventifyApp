@@ -15,6 +15,13 @@ const UpdateEvent = ({ language }) => {
     const translations = updateEventTranslations[language];
 
     useEffect(() => {
+        const userId = localStorage.getItem("userId");
+        if (!userId) {
+            navigate("/login");
+        }
+    }, [navigate]);
+
+    useEffect(() => {
         const fetchEventData = async () => {
             try {
                 const response = await fetch(`https://localhost:7090/Event/GetEventById?id=${id}`);
