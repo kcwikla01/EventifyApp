@@ -17,6 +17,13 @@ namespace Eventify.WEB.Autofac
             builder.RegisterType<EventApplicationService>().As<IEventApplicationService>();
             builder.RegisterType<ManageEventsUoW>().As<IManageEventsUoW>();
             builder.RegisterType<SystemApplicationService>().As<ISystemApplicationService>();
+            builder.RegisterType<EventParticipantsApplicationService>().As<IEventParticipantsApplicationService>();
+            builder.RegisterType<ManageEventsParticipantsUoW>().As<IManageEventsParticipantsUoW>();
+            builder.RegisterType<ManageMailUoW>().As<IManageMailUoW>();
+            builder.RegisterType<EventShedulesApplicationService>().As<IEventShedulesApplicationService>();
+            builder.RegisterType<ManageEventShedulesUoW>().As<IManageEventShedulesUoW>();
+            builder.RegisterType<EventReportApplicationService>().As<IEventReportApplicationService>();
+            builder.RegisterType<ManageEventReportUoW>().As<IManageEventReportUoW>();
         }
     }
 }

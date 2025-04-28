@@ -24,21 +24,28 @@ namespace Eventify.WEB.ApplicationServices
 
             if (eventDto.Validate())
             {
-                var user = await _manageUsersUoW.GetUserById(eventDto.OwnerId);
-                if(user == null)
+                if (eventDto.ValidateDates())
                 {
-                    return new NotFoundObjectResult("Owner not exist");
+                    var user = await _manageUsersUoW.GetUserById(eventDto.OwnerId);
+                    if (user == null)
+                    {
+                        return new NotFoundObjectResult("Owner not exist");
+                    }
+                    try
+                    {
+                        var newEvent = await _manageEventsUoW.CreateEvent(eventDto);
+                        eventDto.Id = newEvent.Id;
+                    }
+                    catch (System.Exception e)
+                    {
+                        return new BadRequestObjectResult(e.Message);
+                    }
+                    return new OkObjectResult(eventDto);
                 }
-                try
+                else
                 {
-                    var newEvent = await _manageEventsUoW.CreateEvent(eventDto);
-                    eventDto.Id = newEvent.Id;
+                    return new BadRequestObjectResult("Invalid startDate or endDate");
                 }
-                catch (System.Exception e)
-                {
-                    return new BadRequestObjectResult(e.Message);
-                }
-                return new OkObjectResult(eventDto);
             }
             else
             {
@@ -107,16 +114,23 @@ namespace Eventify.WEB.ApplicationServices
 
             if (eventDto.Validate())
             {
-                var user = await _manageUsersUoW.GetUserById(eventDto.OwnerId);
-                if (user == null)
+                if (eventDto.ValidateDates())
                 {
-                    return new NotFoundObjectResult("Owner not exist");
-                }
+                    var user = await _manageUsersUoW.GetUserById(eventDto.OwnerId);
+                    if (user == null)
+                    {
+                        return new NotFoundObjectResult("Owner not exist");
+                    }
 
-                var updatedEvent = await _manageEventsUoW.UpdateEvent(eventDto);
-                var updatedEventDto = _mapper.Map<EventDto>(updatedEvent);
-                
-                return new OkObjectResult(updatedEventDto);
+                    var updatedEvent = await _manageEventsUoW.UpdateEvent(eventDto);
+                    var updatedEventDto = _mapper.Map<EventDto>(updatedEvent);
+
+                    return new OkObjectResult(updatedEventDto);
+                }
+                else
+                {
+                    return new BadRequestObjectResult("Invalid startDate or endDate");
+                }
             }
             else
             {

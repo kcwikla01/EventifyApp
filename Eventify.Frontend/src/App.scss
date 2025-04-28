@@ -114,13 +114,32 @@ body.dark-mode {
 /* Prze³¹cznik ciemnego trybu */
 .theme-toggle {
     position: fixed;
-    top: 1rem;
+    top: 0.3rem;
     left: 1rem;
     z-index: 1000;
-    transform: scale(1);
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .icon-container {
+        font-size: 1.8rem;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
 
     @media (max-width: 768px) {
         left: 0.1rem;
