@@ -16,13 +16,13 @@ namespace Eventify.WEB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddEventShedules(EventActivityDto eventActivityDto)
+        public async Task<IActionResult> AddEventActivity(EventActivityDto eventActivityDto)
         {
             return await _eventShedulesApplicationService.AddEventShedules(eventActivityDto);
         }
 
         [HttpDelete]
-        public async Task<IActionResult> RemoveActivity(int activityId)
+        public async Task<IActionResult> RemoveEventActivity(int activityId)
         {
             return await _eventShedulesApplicationService.RemoveActivity(activityId);
         }
@@ -34,7 +34,7 @@ namespace Eventify.WEB.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetActivityInfo(int id)
+        public async Task<IActionResult> GetEventActivityInfo(int id)
         {
             return await _eventShedulesApplicationService.GetActivityInfo(id);
         }
