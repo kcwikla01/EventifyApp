@@ -22,6 +22,8 @@ namespace Eventify.WEB.Autofac
             builder.RegisterType<ManageMailUoW>().As<IManageMailUoW>();
             builder.RegisterType<EventShedulesApplicationService>().As<IEventShedulesApplicationService>();
             builder.RegisterType<ManageEventShedulesUoW>().As<IManageEventShedulesUoW>();
+            builder.RegisterType<EventReportApplicationService>().As<IEventReportApplicationService>();
+            builder.RegisterType<ManageEventReportUoW>().As<IManageEventReportUoW>();
         }
     }
 }
