@@ -42,7 +42,7 @@ body.dark-mode .dashboard-header {
     color: #ffffff;
 }
 
-.events-section, .user-events-section {
+.events-section, .user-events-section, .joined-events-section {
     width: 100%;
     max-width: 550px;
     margin: 20px auto;
@@ -52,7 +52,7 @@ body.dark-mode .dashboard-header {
     transition: all 0.3s ease-in-out;
 }
 
-body.dark-mode .events-section, body.dark-mode .user-events-section {
+body.dark-mode .events-section, body.dark-mode .user-events-section, body.dark-mode .joined-events-section {
     background: rgba(35, 39, 65, 0.9);
 }
 
@@ -181,6 +181,28 @@ body.dark-mode .view-details-btn:hover {
     transform: scale(1.05);
     box-shadow: 0 5px 15px rgba(244, 67, 54, 0.4);
 }
+.sections-wrapper {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.left-column,
+.right-column {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .sections-wrapper {
+        flex-direction: column;
+    }
+}
+
 
 .add-event-btn {
     background: linear-gradient(135deg, #ff4081, #ff80ab);
@@ -219,7 +241,7 @@ body.dark-mode .add-event-btn:hover {
         align-items: center;
     }
 
-    .events-section, .user-events-section {
+    .events-section, .user-events-section, .joined-events-section {
         width: 90%;
     }
 

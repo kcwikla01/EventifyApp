@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./../styles/_addEventPage.scss";
 import addEventTranslations from './../translations/addEventTranslations';
@@ -14,6 +14,13 @@ const AddEvent = ({ language }) => {
     const translations = addEventTranslations[language];
 
     const currentDate = new Date().toISOString().slice(0, 16);
+
+    useEffect(() => {
+        const userId = localStorage.getItem("userId");
+        if (!userId) {
+            navigate("/login");
+        }
+    }, [navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
