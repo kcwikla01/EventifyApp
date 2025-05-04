@@ -13,5 +13,6 @@ namespace Eventify.UoW.Base
         Task<EventReview> AddEventReview(EventReviewDto eventReviewDto);
         Task<bool> CheckIfReviewExistForThisEventAndUser(EventReviewDto eventReviewDto);
         Task<double> GetAverageRatingForEvent(int eventId);
+        Task<List<String>> GetCommentsForEvent(int eventId);
     }
 }
