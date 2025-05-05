@@ -12,11 +12,13 @@ namespace Eventify.UoW
     public class ManageEventReportUoW : IManageEventReportUoW
     {
         private readonly IManageEventsUoW _manageEvents;
+        private readonly IManageEventsReviewUoW _manageEventsReviewUoW;
         private readonly EventifyDbContext _context;
-        public ManageEventReportUoW(EventifyDbContext context, IManageEventsUoW manageEvents)
+        public ManageEventReportUoW(EventifyDbContext context, IManageEventsUoW manageEvents, IManageEventsReviewUoW manageEventsReviewUoW)
         {
             _context = context;
             _manageEvents = manageEvents;
+            _manageEventsReviewUoW = manageEventsReviewUoW;
         }
         public async Task<ReportDTO> GenerateReport(int eventId)
         {
@@ -37,6 +39,8 @@ namespace Eventify.UoW
                     .Count(),
                 startTime = findedEvent.StartDate,
                 endTime = findedEvent.EndDate,
+                AverageRate = await _manageEventsReviewUoW.GetAverageRatingForEvent(eventId),
+                Comments = await _manageEventsReviewUoW.GetCommentsForEvent(eventId)
             };
 
             return report;

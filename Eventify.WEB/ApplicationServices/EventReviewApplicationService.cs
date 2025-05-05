@@ -10,11 +10,13 @@ namespace Eventify.WEB.ApplicationServices
     {
         private readonly IManageEventsUoW _manageEventsUoW;
         private readonly IManageEventsReviewUoW _manageEventsReviewUoW;
+        private readonly IManageEventsParticipantsUoW _manageEventsParticipantsUoW;
 
-        public EventReviewApplicationService(IManageEventsUoW manageEventsUoW, IManageEventsReviewUoW manageEventsReviewUoW)
+        public EventReviewApplicationService(IManageEventsUoW manageEventsUoW, IManageEventsReviewUoW manageEventsReviewUoW, IManageEventsParticipantsUoW manageEventsParticipantsUoW)
         {
             _manageEventsUoW = manageEventsUoW;
             _manageEventsReviewUoW = manageEventsReviewUoW;
+            _manageEventsParticipantsUoW = manageEventsParticipantsUoW;
         }
         public async Task<IActionResult> AddEventReview(EventReviewDto eventReviewDto)
         {
@@ -36,23 +38,39 @@ namespace Eventify.WEB.ApplicationServices
                     return new BadRequestObjectResult("Cannot add a review before the event has ended.");
                 }
 
-                var reviewExistForThisEventAndUser = await _manageEventsReviewUoW.CheckIfReviewExistForThisEventAndUser(eventReviewDto);
-                if (!reviewExistForThisEventAndUser)
+                EventParticipantDto eventParticipantDto = new EventParticipantDto()
                 {
-                    var createdEventReview = await _manageEventsReviewUoW.AddEventReview(eventReviewDto);
+                    EventId = eventReviewDto.EventId,
+                    UserId = eventReviewDto.UserId
+                };
 
-                    if (createdEventReview != null)
+                var existEventAndUser = await _manageEventsParticipantsUoW.CheckIfExistLink(eventParticipantDto);
+                if (existEventAndUser)
+                {
+
+                    var reviewExistForThisEventAndUser =
+                        await _manageEventsReviewUoW.CheckIfReviewExistForThisEventAndUser(eventReviewDto);
+                    if (!reviewExistForThisEventAndUser)
                     {
-                        return new OkObjectResult("Event review Added");
+                        var createdEventReview = await _manageEventsReviewUoW.AddEventReview(eventReviewDto);
+
+                        if (createdEventReview != null)
+                        {
+                            return new OkObjectResult("Event review Added");
+                        }
+                        else
+                        {
+                            return new BadRequestObjectResult("Failed to create event review.");
+                        }
                     }
                     else
                     {
-                        return new BadRequestObjectResult("Failed to create event review.");
+                        return new BadRequestObjectResult("Review exist for this user");
                     }
                 }
                 else
                 {
-                    return new BadRequestObjectResult("Review exist for this user");
+                    return new NotFoundObjectResult("You are not participant of this event");
                 }
             }
             else

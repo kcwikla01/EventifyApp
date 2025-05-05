@@ -53,5 +53,13 @@ namespace Eventify.UoW
 
             return averageRating;
         }
+
+        public async Task<List<string>> GetCommentsForEvent(int eventId)
+        {
+            var comments = await _context.EventReviews.Where(comment => comment.EventId == eventId)
+                .Select(r => r.Comment)
+                .ToListAsync();
+            return comments;
+        }
     }
 }
