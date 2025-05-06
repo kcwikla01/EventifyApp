@@ -142,6 +142,10 @@ const UserDashboard = ({ language }) => {
         return joinedEvents.some(e => e.id === eventId);
     };
 
+    const handleViewSchedule = (eventId) => {
+        navigate(`/eventSchedule/${eventId}`);
+    };
+
     return (
         <div className="user-dashboard">
             <div className="dashboard-container">
@@ -151,7 +155,7 @@ const UserDashboard = ({ language }) => {
                     {translations.addEventButton}
                 </button>
 
-                {error && <p className="error-message">{error}</p>}
+                {error && <p className="error-message">{translations.errorFetchingEvents}</p>}
 
                 <div className="sections-wrapper">
                     <div className="left-column">
@@ -174,6 +178,9 @@ const UserDashboard = ({ language }) => {
                                                         {translations.joinButton}
                                                     </button>
                                                 )}
+                                                <button className="view-schedule-btn" onClick={() => handleViewSchedule(event.id)}>
+                                                    {translations.viewScheduleButton}
+                                                </button>
                                             </li>
                                         ))}
                                 </ul>
@@ -183,10 +190,9 @@ const UserDashboard = ({ language }) => {
                         </div>
                     </div>
 
-
                     <div className="right-column">
                         <div className="user-events-section">
-                            <h2 className="section-title">{translations.yourEventsTitle}</h2>
+                            <h2 className="section-title">{translations.userEventsTitle}</h2>
                             {userEvents.length > 0 ? (
                                 <ul>
                                     {userEvents.map((event) => (
@@ -209,6 +215,12 @@ const UserDashboard = ({ language }) => {
                                                     onClick={() => handleRemoveEvent(event.id)}
                                                 >
                                                     {translations.removeEventButton}
+                                                </button>
+                                                <button
+                                                    className="view-details-btn"
+                                                    onClick={() => navigate(`/manageSchedule/${event.id}`)}
+                                                >
+                                                    {translations.manageScheduleButton}
                                                 </button>
                                             </div>
                                         </li>
@@ -236,7 +248,7 @@ const UserDashboard = ({ language }) => {
                                                     className="remove-event-btn"
                                                     onClick={() => leaveEvent(event.id)}
                                                 >
-                                                    {translations.removeEventButton}
+                                                    {translations.leaveEventButton}
                                                 </button>
                                             </div>
                                         </li>

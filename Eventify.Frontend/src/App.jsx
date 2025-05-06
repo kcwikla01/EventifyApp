@@ -6,6 +6,9 @@ import LoginPage from './components/LoginPage';
 import UserDashboard from './components/UserDashboard';
 import AddEvent from './components/AddEvent';
 import UpdateEvent from './components/UpdateEvent';
+import ManageSchedule from './components/ManageSchedule';
+import AddEventSchedule from './components/AddEventSchedule';
+import EventSchedule from './components/EventSchedule';
 import englishFlag from './assets/eng.png';
 import polishFlag from './assets/pol.png';
 import './App.scss';
@@ -112,7 +115,11 @@ function App() {
                     <Route path="/addEvent" element={<AddEvent language={language} />} />
                     <Route path="/userDashboard" element={<UserDashboard language={language} />} />
                     <Route path="/updateEvent/:id" element={<UpdateEvent language={language} />} />
+                    <Route path="/manageSchedule/:eventId" element={<ManageSchedule language={language} />} />
+                    <Route path="/addEventSchedule/:eventId" element={<AddEventSchedule language={language} />} />
+                    <Route path="/eventSchedule/:eventId" element={<EventSchedule language={language} />} />
                 </Routes>
+
             </div>
         </Router>
     );
