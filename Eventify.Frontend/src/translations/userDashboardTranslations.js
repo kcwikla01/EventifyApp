@@ -16,6 +16,8 @@
         deleteEventConfirmMessage: "Are you sure you want to delete this event?",
         removeEventButton: "Remove Event",
         updateEventButton: "Update Event",
+        viewReportButton: "View raport",
+        addReviewButton: "Add review",
     },
     pl: {
         dashboardTitle: "Twój Panel Wydarzeń",
@@ -34,6 +36,8 @@
         deleteEventConfirmMessage: "Czy na pewno chcesz usunąć to wydarzenie?",
         removeEventButton: "Usuń Wydarzenie",
         updateEventButton: "Zaktualizuj Wydarzenie",
+        viewReportButton: "Zobacz raport",
+        addReviewButton: "Dodaj opinie",
     }
 };
 
