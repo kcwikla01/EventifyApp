@@ -164,7 +164,10 @@ const UserDashboard = ({ language }) => {
                             {events.length > 0 ? (
                                 <ul>
                                     {events
-                                        .filter(event => event.ownerId !== parseInt(ownerId))
+                                        .filter(event =>
+                                            event.ownerId !== parseInt(ownerId) &&
+                                            new Date(event.endDate) > new Date()
+                                        )
                                         .map((event) => (
                                             <li key={event.id} className="event-item">
                                                 <h3 className="event-name">{event.name}</h3>
@@ -195,36 +198,59 @@ const UserDashboard = ({ language }) => {
                             <h2 className="section-title">{translations.userEventsTitle}</h2>
                             {userEvents.length > 0 ? (
                                 <ul>
-                                    {userEvents.map((event) => (
-                                        <li key={event.id} className="event-item">
-                                            <h3 className="event-name">{event.name}</h3>
-                                            <p className="event-description">{event.description}</p>
-                                            <p className="event-date">
-                                                {new Date(event.startDate).toLocaleString()} -{" "}
-                                                {new Date(event.endDate).toLocaleString()}
-                                            </p>
-                                            <div className="event-actions">
-                                                <button
-                                                    className="update-event-btn"
-                                                    onClick={() => navigate(`/updateEvent/${event.id}`)}
-                                                >
-                                                    {translations.updateEventButton}
-                                                </button>
-                                                <button
-                                                    className="remove-event-btn"
-                                                    onClick={() => handleRemoveEvent(event.id)}
-                                                >
-                                                    {translations.removeEventButton}
-                                                </button>
-                                                <button
-                                                    className="view-details-btn"
-                                                    onClick={() => navigate(`/manageSchedule/${event.id}`)}
-                                                >
-                                                    {translations.manageScheduleButton}
-                                                </button>
-                                            </div>
-                                        </li>
-                                    ))}
+                                    {userEvents.map((event) => {
+                                        const hasEnded = new Date(event.endDate) <= new Date();
+                                        return (
+                                            <li key={event.id} className="event-item">
+                                                <h3 className="event-name">{event.name}</h3>
+                                                <p className="event-description">{event.description}</p>
+                                                <p className="event-date">
+                                                    {new Date(event.startDate).toLocaleString()} -{" "}
+                                                    {new Date(event.endDate).toLocaleString()}
+                                                </p>
+                                                <div className="event-actions">
+                                                    {hasEnded ? (
+                                                        <>
+                                                            <button
+                                                                className="remove-event-btn"
+                                                                onClick={() => handleRemoveEvent(event.id)}
+                                                            >
+                                                                {translations.removeEventButton}
+                                                            </button>
+                                                            <button
+                                                                className="view-details-btn"
+                                                                onClick={() => navigate(`/eventReport/${event.id}`)}
+                                                            >
+                                                                {translations.viewReportButton}
+                                                            </button>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <button
+                                                                className="update-event-btn"
+                                                                onClick={() => navigate(`/updateEvent/${event.id}`)}
+                                                            >
+                                                                {translations.updateEventButton}
+                                                            </button>
+                                                            <button
+                                                                className="remove-event-btn"
+                                                                onClick={() => handleRemoveEvent(event.id)}
+                                                            >
+                                                                {translations.removeEventButton}
+                                                            </button>
+                                                            <button
+                                                                className="view-details-btn"
+                                                                onClick={() => navigate(`/manageSchedule/${event.id}`)}
+                                                            >
+                                                                {translations.manageScheduleButton}
+                                                            </button>
+                                                        </>
+                                                    )}
+                                                </div>
+                                            </li>
+                                        );
+                                    })}
+
                                 </ul>
                             ) : (
                                 <p>{translations.noUserEvents}</p>
@@ -235,29 +261,41 @@ const UserDashboard = ({ language }) => {
                             <h2 className="section-title">{translations.joinedEventsTitle}</h2>
                             {joinedEvents.length > 0 ? (
                                 <ul>
-                                    {joinedEvents.map((event) => (
-                                        <li key={event.id} className="event-item">
-                                            <h3 className="event-name">{event.name}</h3>
-                                            <p className="event-description">{event.description}</p>
-                                            <p className="event-date">
-                                                {new Date(event.startDate).toLocaleString()} -{" "}
-                                                {new Date(event.endDate).toLocaleString()}
-                                            </p>
-                                            <div className="event-actions">
-                                                <button
-                                                    className="remove-event-btn"
-                                                    onClick={() => leaveEvent(event.id)}
-                                                >
-                                                    {translations.leaveEventButton}
-                                                </button>
-                                            </div>
-                                        </li>
-                                    ))}
+                                    {joinedEvents.map((event) => {
+                                        const hasEnded = new Date(event.endDate) <= new Date();
+                                        return (
+                                            <li key={event.id} className="event-item">
+                                                <h3 className="event-name">{event.name}</h3>
+                                                <p className="event-description">{event.description}</p>
+                                                <p className="event-date">
+                                                    {new Date(event.startDate).toLocaleString()} -{" "}
+                                                    {new Date(event.endDate).toLocaleString()}
+                                                </p>
+                                                <div className="event-actions">
+                                                    <button
+                                                        className="remove-event-btn"
+                                                        onClick={() => leaveEvent(event.id)}
+                                                    >
+                                                        {translations.leaveEventButton}
+                                                    </button>
+                                                    {hasEnded && (
+                                                        <button
+                                                            className="view-details-btn"
+                                                            onClick={() => navigate(`/eventReview/${event.id}`)}
+                                                        >
+                                                            {translations.addReviewButton}
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            </li>
+                                        );
+                                    })}
                                 </ul>
                             ) : (
                                 <p>{translations.noJoinedEvents}</p>
                             )}
                         </div>
+
                     </div>
                 </div>
             </div>
