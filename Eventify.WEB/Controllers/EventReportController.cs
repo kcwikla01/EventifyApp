@@ -1,4 +1,5 @@
 ﻿using Eventify.WEB.ApplicationServices.Base;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Eventify.WEB.Controllers
@@ -13,6 +14,8 @@ namespace Eventify.WEB.Controllers
         {
             _eventReportApplicationService = eventReportApplicationService;
         }
+
+        [Authorize(Roles = "Admin,User")]
         [HttpPost]
         public async Task<IActionResult> GenerateReport(int eventId)
         {

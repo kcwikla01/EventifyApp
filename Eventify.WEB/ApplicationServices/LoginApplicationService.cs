@@ -1,7 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Security.Claims;
+using AutoMapper;
 using Eventify.Database.Models.Dto;
 using Eventify.UoW.Base;
 using Eventify.WEB.ApplicationServices.Base;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Eventify.WEB.ApplicationServices
@@ -11,11 +13,13 @@ namespace Eventify.WEB.ApplicationServices
         private readonly IManageUsersUoW _manageUsersUoW;
         private readonly IManageRolesUoW _manageRoleUoW;
         private readonly IMapper _mapper;
-        public LoginApplicationService(IManageUsersUoW manageUsersUoW, IManageRolesUoW manageRoleUoW, IMapper mapper)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public LoginApplicationService(IManageUsersUoW manageUsersUoW, IManageRolesUoW manageRoleUoW, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             _manageUsersUoW = manageUsersUoW;
             _manageRoleUoW = manageRoleUoW;
             _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<IActionResult> Login(UserDto userDto)
         {
@@ -38,6 +42,15 @@ namespace Eventify.WEB.ApplicationServices
             {
                 return new NotFoundObjectResult("Role not exist");
             }
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, userDto.Name),
+                new Claim(ClaimTypes.Role, role.Name),
+            };
+
+            var claimsIdentity = new ClaimsIdentity(claims, "Cookies");
+            await _httpContextAccessor.HttpContext.SignInAsync("Cookies", new ClaimsPrincipal(claimsIdentity));
 
             var loginDto = _mapper.Map<LoginDto>(role);
             loginDto.UserId = userPasswordCorrect.Id;

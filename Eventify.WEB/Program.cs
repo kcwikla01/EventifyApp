@@ -23,6 +23,27 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddAuthentication("Cookies")
+    .AddCookie("Cookies", options =>
+    {
+        options.LoginPath = "/Auth/Login";
+        options.AccessDeniedPath = "/Auth/AccessDenied";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+        options.SlidingExpiration = true;
+        options.Events.OnRedirectToLogin = context =>
+        {
+            context.Response.StatusCode = 401;
+            return Task.CompletedTask;
+        };
+        options.Events.OnRedirectToAccessDenied = context =>
+        {
+            context.Response.StatusCode = 401;
+            return Task.CompletedTask;
+        };
+    });
+
 // Add AutoMapper configuration
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 
@@ -57,9 +78,10 @@ if (app.Environment.IsDevelopment())
 }
 
 // Enable CORS with the "AllowLocalhost" policy
-app.UseCors("AllowLocalhost");
 
 app.UseHttpsRedirection();
+app.UseCors("AllowLocalhost");
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();  // Map controller routes

@@ -1,4 +1,5 @@
 ﻿using Eventify.WEB.ApplicationServices.Base;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Eventify.WEB.Controllers
@@ -13,6 +14,7 @@ namespace Eventify.WEB.Controllers
             _systemApplicationService = systemApplicationService;
         }
 
+        [Authorize(Roles = "Admin,User")]
         [HttpGet]
         public async Task<IActionResult> PingAnonymous()
         {
