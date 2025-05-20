@@ -25,7 +25,7 @@ namespace Eventify.WEB.ApplicationServices
                 return new BadRequestResult();
             }
 
-            if (eventReviewDto.Rating > 0 && eventReviewDto.Rating < 5)
+            if (eventReviewDto.Rating > 0 && eventReviewDto.Rating <= 5)
             {
                 var eventById = await _manageEventsUoW.GetEventById(eventReviewDto.EventId);
                 if(eventById == null)
