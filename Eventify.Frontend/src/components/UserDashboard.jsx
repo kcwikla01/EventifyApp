@@ -2,6 +2,8 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "./../styles/_userDashboard.scss";
 import userDashboardTranslations from "./../translations/userDashboardTranslations";
+import { jsPDF } from "jspdf";
+
 
 const UserDashboard = ({ language }) => {
     const [events, setEvents] = useState([]);
@@ -94,6 +96,47 @@ const UserDashboard = ({ language }) => {
         }
     };
 
+    const handleGenerateReport = async (eventId) => {
+        try {
+            const response = await fetch(`https://localhost:7090/EventReport/GenerateReport?eventId=${eventId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ eventId }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to generate report");
+            }
+
+            const eventDetails = await response.json();
+            const doc = new jsPDF();
+
+            doc.text(`Event Name: ${eventDetails.eventName}`, 10, 10);
+            doc.text(`Description: ${eventDetails.eventDescription}`, 10, 20);
+            doc.text(`Start Time: ${new Date(eventDetails.startTime).toLocaleString()}`, 10, 30);
+            doc.text(`End Time: ${new Date(eventDetails.endTime).toLocaleString()}`, 10, 40);
+            doc.text(`Participants: ${eventDetails.countOfParticipants}`, 10, 50);
+            doc.text(`Average Rate: ${eventDetails.averageRate}`, 10, 60);
+
+            if (eventDetails.comments.length > 0) {
+                doc.text("Comments:", 10, 70);
+                eventDetails.comments.forEach((comment, index) => {
+                    const commentText = `${index + 1}. ${comment}`;
+                    doc.text(commentText, 10, 80 + index * 10);
+                });
+            } else {
+                doc.text("No comments available", 10, 70);
+            }
+            doc.save(`Event_${eventId}_Report.pdf`);
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
+
+
     const leaveEvent = async (eventId) => {
         try {
             const response = await fetch(`https://localhost:7090/EventParticipants/RemoveEventParticipant`, {
@@ -121,6 +164,11 @@ const UserDashboard = ({ language }) => {
     const handleAddEventClick = () => {
         navigate("/addEvent");
     };
+    const handleViewReport = (eventId) => {
+        navigate(`/event-report/${eventId}`);
+    };
+
+
 
     const handleRemoveEvent = async (id) => {
         if (!window.confirm(translations.deleteEventConfirmMessage)) return;
@@ -219,9 +267,15 @@ const UserDashboard = ({ language }) => {
                                                             </button>
                                                             <button
                                                                 className="view-details-btn"
-                                                                onClick={() => navigate(`/eventReport/${event.id}`)}
+                                                                onClick={() => handleViewReport(event.id)}
                                                             >
                                                                 {translations.viewReportButton}
+                                                            </button>
+                                                            <button
+                                                                className="generate-report-btn"
+                                                                onClick={() => handleGenerateReport(event.id)}
+                                                            >
+                                                                {translations.generateReportButton}
                                                             </button>
                                                         </>
                                                     ) : (
@@ -250,12 +304,12 @@ const UserDashboard = ({ language }) => {
                                             </li>
                                         );
                                     })}
-
                                 </ul>
                             ) : (
                                 <p>{translations.noUserEvents}</p>
                             )}
                         </div>
+
 
                         <div className="joined-events-section">
                             <h2 className="section-title">{translations.joinedEventsTitle}</h2>

@@ -10,6 +10,7 @@ import ManageSchedule from './components/ManageSchedule';
 import AddEventSchedule from './components/AddEventSchedule';
 import EventSchedule from './components/EventSchedule';
 import EventReviewPage from './components/EventReviewPage';
+import EventReport from './components/EventReport';
 import englishFlag from './assets/eng.png';
 import polishFlag from './assets/pol.png';
 import './App.scss';
@@ -120,6 +121,8 @@ function App() {
                     <Route path="/addEventSchedule/:eventId" element={<AddEventSchedule language={language} />} />
                     <Route path="/eventSchedule/:eventId" element={<EventSchedule language={language} />} />
                     <Route path="/eventReview/:eventId" element={<EventReviewPage language={language} />} />
+                    <Route path="/event-report/:eventId" element={<EventReport language={language} />} />
+
                 </Routes>
 
             </div>
