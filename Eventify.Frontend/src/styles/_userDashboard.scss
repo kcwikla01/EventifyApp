@@ -161,6 +161,24 @@ body.dark-mode .view-details-btn:hover {
     margin-top: 10px;
     transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
+.generate-report-btn {
+    background: linear-gradient(135deg, #4caf50, #81c784);
+    color: white;
+    padding: 12px 18px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+    margin-top: 10px;
+}
+
+.generate-report-btn:hover {
+    background: linear-gradient(135deg, #388e3c, #66bb6a);
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+}
 
 .update-event-btn {
     background: linear-gradient(135deg, #4caf50, #81c784);

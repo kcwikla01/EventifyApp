@@ -18,6 +18,8 @@
         updateEventButton: "Update Event",
         viewReportButton: "View raport",
         addReviewButton: "Add review",
+        generateReportButton: "Generate report",
+
     },
     pl: {
         dashboardTitle: "Twój Panel Wydarzeń",
@@ -38,6 +40,8 @@
         updateEventButton: "Zaktualizuj Wydarzenie",
         viewReportButton: "Zobacz raport",
         addReviewButton: "Dodaj opinie",
+        generateReportButton: "Generuj raport",
+
     }
 };
 
