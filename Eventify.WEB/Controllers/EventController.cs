@@ -44,7 +44,7 @@ namespace Eventify.WEB.Controllers
             return await _eventApplicationService.GetEventsByOwnerId(ownerId);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,User")]
         [HttpDelete]
         public async Task<IActionResult> RemoveEventById(int id)
         {

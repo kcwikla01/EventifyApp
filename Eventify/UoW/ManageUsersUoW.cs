@@ -81,5 +81,14 @@ namespace Eventify.UoW
 
             return null;
         }
+
+        public async Task<int> GetUserByName(string userName)
+        {
+            var findedUser = await _context.Users.FirstOrDefaultAsync(u => u.Name.Equals(userName));
+
+            if (findedUser != null)
+                return findedUser.Id;
+            return -1;
+        }
     }
 }
