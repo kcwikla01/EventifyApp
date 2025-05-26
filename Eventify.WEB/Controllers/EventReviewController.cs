@@ -1,5 +1,6 @@
 ﻿using Eventify.Database.Models.Dto;
 using Eventify.WEB.ApplicationServices.Base;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Eventify.WEB.Controllers
@@ -15,6 +16,7 @@ namespace Eventify.WEB.Controllers
             this._eventReviewApplicationService = eventReviewApplicationService;
         }
 
+        [Authorize(Roles = "Admin,User")]
         [HttpPost]
         public async Task<IActionResult> AddEventReview(EventReviewDto eventReviewDto)
         {
