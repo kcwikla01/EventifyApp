@@ -41,7 +41,11 @@ const UserDashboard = ({ language }) => {
 
     const fetchUserEvents = useCallback(async () => {
         try {
-            const response = await fetch(`https://localhost:7090/Event/GetEventsByOwnerId?ownerId=${ownerId}`);
+            const response = await fetch(`https://localhost:7090/Event/GetEventsByOwnerId?ownerId=${ownerId}`, {
+                headers: {
+                    "user-id": ownerId,
+                },
+            });
             if (!response.ok) {
                 throw new Error("Failed to fetch user events");
             }
@@ -51,6 +55,7 @@ const UserDashboard = ({ language }) => {
             setError(err.message);
         }
     }, [ownerId]);
+
 
     const fetchAllEvents = async () => {
         try {
@@ -175,6 +180,9 @@ const UserDashboard = ({ language }) => {
         try {
             const response = await fetch(`https://localhost:7090/Event/RemoveEventById?id=${id}`, {
                 method: "DELETE",
+                headers: {
+                    "user-id": ownerId,
+                },
             });
             if (!response.ok) {
                 throw new Error("Failed to remove event");
@@ -185,6 +193,7 @@ const UserDashboard = ({ language }) => {
             setError(err.message);
         }
     };
+
 
     const isEventJoined = (eventId) => {
         return joinedEvents.some(e => e.id === eventId);

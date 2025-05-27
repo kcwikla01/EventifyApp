@@ -72,6 +72,8 @@ const UpdateEvent = ({ language }) => {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
+                    "user-id": ownerId,
+
                 },
                 body: JSON.stringify(eventDto),
             });
