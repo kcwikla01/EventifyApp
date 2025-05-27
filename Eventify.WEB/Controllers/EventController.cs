@@ -18,13 +18,12 @@ namespace Eventify.WEB.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateEvent(EventDto eventDto)
         {
-            HttpContext.Request.Headers.TryGetValue("user-id", out var userId);
-            if (string.IsNullOrEmpty(userId))
+            var userId = GetUserIdFromHeaders();
+            if (userId == null)
             {
-                return BadRequest("User ID is required.");
+                return Unauthorized("User ID is required or invalid.");
             }
-            var userIdInt = int.Parse(userId);
-            return await _eventApplicationService.CreateEvent(eventDto, userIdInt);
+            return await _eventApplicationService.CreateEvent(eventDto, userId.Value);
         }
 
         [HttpGet]
@@ -44,23 +43,48 @@ namespace Eventify.WEB.Controllers
         [HttpGet]
         public async Task<IActionResult> GetEventsByOwnerId(int ownerId)
         {
-            return await _eventApplicationService.GetEventsByOwnerId(ownerId);
+            var userId = GetUserIdFromHeaders();
+            if (userId == null)
+            {
+                return Unauthorized("User ID is required or invalid.");
+            }
+            return await _eventApplicationService.GetEventsByOwnerId(ownerId, userId.Value);
         }
+
+
 
 
         [HttpDelete]
         public async Task<IActionResult> RemoveEventById(int id)
         {
-            return await _eventApplicationService.RemoveEventById(id);
+            var userId = GetUserIdFromHeaders();
+            if (userId == null)
+            {
+                return BadRequest("User ID is required or invalid.");
+            }
+            return await _eventApplicationService.RemoveEventById(id, userId.Value);
         }
 
 
         [HttpPut]
         public async Task<IActionResult> UpdateEventById(EventDto eventDto)
         {
-            return await _eventApplicationService.UpdateEventById(eventDto);
+            var userId = GetUserIdFromHeaders();
+            if (userId == null)
+            {
+                return Unauthorized("User ID is required or invalid.");
+            }
+            return await _eventApplicationService.UpdateEventById(eventDto, userId.Value);
         }
 
+        private int? GetUserIdFromHeaders()
+        {
+            if (HttpContext.Request.Headers.TryGetValue("user-id", out var userIdValue) && int.TryParse(userIdValue, out var userId))
+            {
+                return userId;
+            }
 
+            return null;
+        }
     }
 }
