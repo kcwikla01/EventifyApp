@@ -14,7 +14,7 @@ namespace Eventify.WEB.ApplicationServices
         private readonly IMapper _mapper;
 
 
-        public EventApplicationService(IManageEventsUoW manageEventsUoW, IMapper mapper, IManageUsersUoW manageUsersUoW,)
+        public EventApplicationService(IManageEventsUoW manageEventsUoW, IMapper mapper, IManageUsersUoW manageUsersUoW)
         {
             _manageEventsUoW = manageEventsUoW;
             _manageUsersUoW = manageUsersUoW;

@@ -52,6 +52,7 @@ const AddEvent = ({ language }) => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "user-id": ownerId,
                 },
                 body: JSON.stringify(eventDto),
             });
