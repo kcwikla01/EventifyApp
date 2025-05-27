@@ -43,15 +43,6 @@ namespace Eventify.WEB.ApplicationServices
                 return new NotFoundObjectResult("Role not exist");
             }
 
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, userDto.Name),
-                new Claim(ClaimTypes.Role, role.Name),
-            };
-
-            var claimsIdentity = new ClaimsIdentity(claims, "Cookies");
-            await _httpContextAccessor.HttpContext.SignInAsync("Cookies", new ClaimsPrincipal(claimsIdentity));
-
             var loginDto = _mapper.Map<LoginDto>(role);
             loginDto.UserId = userPasswordCorrect.Id;
 

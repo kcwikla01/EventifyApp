@@ -14,7 +14,6 @@ namespace Eventify.WEB.Controllers
             _systemApplicationService = systemApplicationService;
         }
 
-        [Authorize(Roles = "Admin,User")]
         [HttpGet]
         public async Task<IActionResult> PingAnonymous()
         {

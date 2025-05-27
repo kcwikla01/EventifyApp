@@ -13,62 +13,22 @@ namespace Eventify.WEB.ApplicationServices
     {
         private readonly IManageEventShedulesUoW _manageEventShedulesUoW;
         private readonly IManageEventsUoW _manageEventsUoW;
-        private readonly IManageUsersUoW _manageUsersUoW;
         private readonly IMapper _mapper;
-        private int _currentUserId;
-        private string? _currentUserRole;
-        private bool _userContextInitialized = false;
-        private IActionResult? _userContextError;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public EventShedulesApplicationService(IManageEventShedulesUoW manageEventShedulesUoW, IManageEventsUoW manageEventsUoW, IMapper mapper, IManageUsersUoW manageUsersUoW)
+
+        public EventShedulesApplicationService(IManageEventShedulesUoW manageEventShedulesUoW, IManageEventsUoW manageEventsUoW, IMapper mapper)
         {
             _manageEventShedulesUoW = manageEventShedulesUoW;
             _manageEventsUoW = manageEventsUoW;
             _mapper = mapper;
-            _manageUsersUoW = manageUsersUoW;
         }
 
-        private async Task EnsureUserContext()
-        {
-            if (_userContextInitialized)
-                return;
-
-            var user = _httpContextAccessor.HttpContext?.User;
-            var userNameClaim = user?.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Name);
-            var roleClaim = user?.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Role);
-
-            if (userNameClaim == null || string.IsNullOrEmpty(userNameClaim.Value) ||
-                roleClaim == null || string.IsNullOrEmpty(roleClaim.Value))
-            {
-                _userContextError = new UnauthorizedResult();
-                _userContextInitialized = true;
-                return;
-            }
-
-            _currentUserId = await _manageUsersUoW.GetUserByName(userNameClaim.Value);
-            _currentUserRole = roleClaim.Value;
-            _userContextInitialized = true;
-            _userContextError = null;
-        }
         public async Task<IActionResult> RemoveActivity(int activityId)
         {
             var eventActivity = await _manageEventShedulesUoW.GetEventActivity(activityId);
             if (eventActivity == null)
             {
                 return new BadRequestObjectResult("Activity not found");
-            }
-
-            var findedEvent = await _manageEventsUoW.GetEventById(eventActivity.EventId);
-            if (findedEvent != null)
-            {
-                await EnsureUserContext();
-
-                if (_userContextError != null)
-                    return _userContextError;
-
-                if (_currentUserRole != "Admin" && _currentUserId != findedEvent.OwnerId)
-                    return new UnauthorizedObjectResult("User with id " + _currentUserId + " is not authorized");
             }
 
             var isActivityRemoved = await _manageEventShedulesUoW.RemoveEventActivity(eventActivity);
@@ -98,16 +58,6 @@ namespace Eventify.WEB.ApplicationServices
             if (findEvent == null)
             {
                 return new BadRequestObjectResult("Event not found");
-            }
-            else
-            {
-                await EnsureUserContext();
-
-                if (_userContextError != null)
-                    return _userContextError;
-
-                if (_currentUserRole != "Admin" && _currentUserId != findEvent.OwnerId)
-                    return new UnauthorizedObjectResult("User with id " + _currentUserId + " is not authorized");
             }
             var isValidDate = ValidateEventActivityDatetimes(findEvent, eventActivityDto);
             if (!isValidDate)

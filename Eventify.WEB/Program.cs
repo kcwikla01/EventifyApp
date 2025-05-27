@@ -17,32 +17,14 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowLocalhost", builder =>
     {
-        builder.WithOrigins("http://localhost:5173")  // Frontend URL (React app)
-               .AllowAnyMethod()                    // Allow all HTTP methods (GET, POST, PUT, etc.)
-               .AllowAnyHeader();                   // Allow any headers (Content-Type, Authorization, etc.)
+        builder.WithOrigins("http://localhost:5173")
+            .AllowAnyMethod()               
+            .AllowAnyHeader()                 
+            .AllowCredentials();                
     });
 });
 
 builder.Services.AddHttpContextAccessor();
-
-builder.Services.AddAuthentication("Cookies")
-    .AddCookie("Cookies", options =>
-    {
-        options.LoginPath = "/Auth/Login";
-        options.AccessDeniedPath = "/Auth/AccessDenied";
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-        options.SlidingExpiration = true;
-        options.Events.OnRedirectToLogin = context =>
-        {
-            context.Response.StatusCode = 401;
-            return Task.CompletedTask;
-        };
-        options.Events.OnRedirectToAccessDenied = context =>
-        {
-            context.Response.StatusCode = 401;
-            return Task.CompletedTask;
-        };
-    });
 
 // Add AutoMapper configuration
 builder.Services.AddAutoMapper(typeof(MapperProfile));
@@ -81,7 +63,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors("AllowLocalhost");
-app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();  // Map controller routes

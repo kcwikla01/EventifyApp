@@ -25,29 +25,6 @@ namespace Eventify.WEB.ApplicationServices
             _httpContextAccessor = httpContextAccessor;
         }
 
-        private async Task EnsureUserContext()
-        {
-            if (_userContextInitialized)
-                return;
-
-            var user = _httpContextAccessor.HttpContext?.User;
-            var userNameClaim = user?.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Name);
-            var roleClaim = user?.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Role);
-
-            if (userNameClaim == null || string.IsNullOrEmpty(userNameClaim.Value) ||
-                roleClaim == null || string.IsNullOrEmpty(roleClaim.Value))
-            {
-                _userContextError = new UnauthorizedResult();
-                _userContextInitialized = true;
-                return;
-            }
-
-            _currentUserId = await _manageUsersUoW.GetUserByName(userNameClaim.Value);
-            _currentUserRole = roleClaim.Value;
-            _userContextInitialized = true;
-            _userContextError = null;
-        }
-
         public async Task<IActionResult> GenerateReport(int eventId)
         {
 
@@ -57,8 +34,6 @@ namespace Eventify.WEB.ApplicationServices
             {
                 return new NotFoundObjectResult("Event not exist");
             }
-
-            await EnsureUserContext();
 
             if (_userContextError != null)
                 return _userContextError;

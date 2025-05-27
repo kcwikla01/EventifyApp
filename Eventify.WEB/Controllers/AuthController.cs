@@ -30,7 +30,6 @@ namespace Eventify.WEB.Controllers
             return new UnauthorizedObjectResult("Acess denied");
         }
 
-        [Authorize(Roles = "Admin,User")]
         [HttpPost]
         public async Task<IActionResult> Logout()
         {

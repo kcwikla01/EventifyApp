@@ -16,7 +16,6 @@ namespace Eventify.WEB.Controllers
             this._eventReviewApplicationService = eventReviewApplicationService;
         }
 
-        [Authorize(Roles = "Admin,User")]
         [HttpPost]
         public async Task<IActionResult> AddEventReview(EventReviewDto eventReviewDto)
         {

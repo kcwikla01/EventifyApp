@@ -16,7 +16,6 @@ namespace Eventify.WEB.Controllers
             _eventApplicationService = eventApplicationService;
         }
 
-        [Authorize(Roles = "Admin,User")]
         [HttpPost]
         public async Task<IActionResult> CreateEvent(EventDto eventDto)
         {

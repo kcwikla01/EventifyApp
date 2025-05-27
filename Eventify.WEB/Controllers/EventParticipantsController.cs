@@ -16,21 +16,18 @@ namespace Eventify.WEB.Controllers
             _eventParticipantsApplicationService = eventParticipantsApplicationService;
         }
 
-        [Authorize(Roles = "Admin,User")]
         [HttpPost]
         public async Task<IActionResult> AddEventParticipant(EventParticipantDto eventParticipantDto)
         {
             return await _eventParticipantsApplicationService.AddEventParticipant(eventParticipantDto);
         }
 
-        [Authorize(Roles = "Admin,User")]
         [HttpGet]
         public async Task<IActionResult> GetAllEventsToWhichTheUserIsAssigned(int userId)
         {
             return await _eventParticipantsApplicationService.GetAllEventsToWhichTheUserIsAssigned(userId);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpDelete]
         public async Task<IActionResult> RemoveEventParticipant(EventParticipantDto eventParticipantDto)
         {
