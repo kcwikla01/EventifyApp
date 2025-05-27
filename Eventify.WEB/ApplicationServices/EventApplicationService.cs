@@ -19,12 +19,16 @@ namespace Eventify.WEB.ApplicationServices
             _manageEventsUoW = manageEventsUoW;
             _manageUsersUoW = manageUsersUoW;
             _mapper = mapper;
+
         }
 
-
-
-        public async Task<IActionResult> CreateEvent(EventDto eventDto)
+        public async Task<IActionResult> CreateEvent(EventDto eventDto, int userId)
         {
+            var currentUser = await _manageUsersUoW.GetUserById(userId);
+            if (eventDto.OwnerId != userId && currentUser.RoleId != 1)
+            {
+                return new UnauthorizedObjectResult("You are not owner of this event");
+            }
             if (eventDto.Validate())
             {
                 if (eventDto.ValidateDates())

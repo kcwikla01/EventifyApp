@@ -23,14 +23,12 @@ namespace Eventify.WEB.Controllers
             return await _userApplicationService.CreateUser(userDto);
         }
 
-        [Authorize(Roles = "Admin,User")]
         [HttpGet]
         public async Task<IActionResult> GetUserById(int id)
         {
             return await _userApplicationService.GetUserById(id);
         }
 
-        [Authorize(Roles = "Admin,User")]
         [HttpPatch]
         public async Task<IActionResult> ChangePassword(UserDto userDto, string newPassword)
         {

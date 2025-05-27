@@ -9,8 +9,7 @@ namespace Eventify.WEB.Controllers
     [Route("[controller]/[action]")]
     public class EventController : Controller
     {
-       private readonly IEventApplicationService _eventApplicationService;
-
+        private readonly IEventApplicationService _eventApplicationService;
        public EventController(IEventApplicationService eventApplicationService)
         {
             _eventApplicationService = eventApplicationService;
@@ -19,42 +18,49 @@ namespace Eventify.WEB.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateEvent(EventDto eventDto)
         {
-            return await _eventApplicationService.CreateEvent(eventDto);
+            HttpContext.Request.Headers.TryGetValue("user-id", out var userId);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return BadRequest("User ID is required.");
+            }
+            var userIdInt = int.Parse(userId);
+            return await _eventApplicationService.CreateEvent(eventDto, userIdInt);
         }
 
-        [Authorize(Roles = "Admin,User")]
         [HttpGet]
         public async Task<IActionResult> GetEventById(int id)
         {
             return await _eventApplicationService.GetEventById(id);
         }
 
-        [Authorize(Roles = "Admin,User")]
+
         [HttpGet]
         public async Task<IActionResult> GetEvents()
         {
             return await _eventApplicationService.GetEvents();
         }
 
-        [Authorize(Roles = "Admin,User")]
+
         [HttpGet]
         public async Task<IActionResult> GetEventsByOwnerId(int ownerId)
         {
             return await _eventApplicationService.GetEventsByOwnerId(ownerId);
         }
 
-        [Authorize(Roles = "Admin,User")]
+
         [HttpDelete]
         public async Task<IActionResult> RemoveEventById(int id)
         {
             return await _eventApplicationService.RemoveEventById(id);
         }
 
-        [Authorize(Roles = "Admin,User")]
+
         [HttpPut]
         public async Task<IActionResult> UpdateEventById(EventDto eventDto)
         {
             return await _eventApplicationService.UpdateEventById(eventDto);
         }
+
+
     }
 }
