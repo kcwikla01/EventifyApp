@@ -5,8 +5,8 @@ namespace Eventify.WEB.ApplicationServices.Base
 {
     public interface IEventParticipantsApplicationService
     {
-        Task<IActionResult> AddEventParticipant(EventParticipantDto eventParticipantDto);
+        Task<IActionResult> AddEventParticipant(EventParticipantDto eventParticipantDto, int userId);
         Task<IActionResult> GetAllEventsToWhichTheUserIsAssigned(int userId);
-        Task<IActionResult> RemoveEventParticipant(EventParticipantDto eventParticipantDto);
+        Task<IActionResult> RemoveEventParticipant(EventParticipantDto eventParticipantDto,int userId);
     }
 }

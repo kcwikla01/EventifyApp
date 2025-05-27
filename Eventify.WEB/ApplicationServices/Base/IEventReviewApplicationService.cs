@@ -5,7 +5,7 @@ namespace Eventify.WEB.ApplicationServices.Base
 {
     public interface IEventReviewApplicationService
     {
-        Task<IActionResult> AddEventReview(EventReviewDto eventReviewDto);
+        Task<IActionResult> AddEventReview(EventReviewDto eventReviewDto, int userId);
 
     }
 }
