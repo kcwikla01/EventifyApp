@@ -35,11 +35,6 @@ namespace Eventify.WEB.ApplicationServices
                 return new NotFoundObjectResult("Event not exist");
             }
 
-            if (_userContextError != null)
-                return _userContextError;
-
-            if (_currentUserRole != "Admin" && _currentUserId != findedEvent.OwnerId)
-                return new UnauthorizedObjectResult("User with id " + _currentUserId + " is not authorized");
 
             if (findedEvent.EndDate > DateTime.Now)
             {
