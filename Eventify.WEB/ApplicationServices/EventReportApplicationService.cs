@@ -11,35 +11,36 @@ namespace Eventify.WEB.ApplicationServices
         private readonly IManageEventsUoW _manageEventsUoW;
         private readonly IManageEventReportUoW _manageEventReportUoW;
         private readonly IManageUsersUoW _manageUsersUoW;
-        private int _currentUserId;
-        private string? _currentUserRole;
-        private bool _userContextInitialized = false;
-        private IActionResult? _userContextError;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public EventReportApplicationService(IManageEventsUoW manageEventsUoW, IManageEventReportUoW manageEventReportUoW, IManageUsersUoW manageUsersUoW, IHttpContextAccessor httpContextAccessor)
+
+        public EventReportApplicationService(IManageEventsUoW manageEventsUoW, IManageEventReportUoW manageEventReportUoW, IManageUsersUoW manageUsersUoW)
         {
             _manageEventsUoW = manageEventsUoW;
             _manageEventReportUoW = manageEventReportUoW;
             _manageUsersUoW = manageUsersUoW;
-            _httpContextAccessor = httpContextAccessor;
+
         }
 
-        public async Task<IActionResult> GenerateReport(int eventId)
+        public async Task<IActionResult> GenerateReport(int eventId, int userId)
         {
-
            var findedEvent = await  _manageEventsUoW.GetEventById(eventId);
+           var currentUser = await _manageUsersUoW.GetUserById(userId);
 
-            if(findedEvent == null)
-            {
+           if (findedEvent.OwnerId != userId && currentUser.RoleId != 1)
+           {
+               return new UnauthorizedObjectResult("You are not the owner of this event or an admin.");
+           }
+            
+           if(findedEvent == null)
+           {
                 return new NotFoundObjectResult("Event not exist");
-            }
+           }
 
-
-            if (findedEvent.EndDate > DateTime.Now)
-            {
+            
+           if (findedEvent.EndDate > DateTime.Now)
+           {
                 return new BadRequestObjectResult("Cannot generate a report before the event has concluded.");
-            }
+           }
 
             var report = await _manageEventReportUoW.GenerateReport(eventId);
 

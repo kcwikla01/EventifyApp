@@ -19,7 +19,12 @@ namespace Eventify.WEB.Controllers
         [HttpPost]
         public async Task<IActionResult> AddEventParticipant(EventParticipantDto eventParticipantDto)
         {
-            return await _eventParticipantsApplicationService.AddEventParticipant(eventParticipantDto);
+            var userId = GetUserIdFromHeaders();
+            if (userId == null)
+            {
+                return Unauthorized("User ID is required or invalid.");
+            }
+            return await _eventParticipantsApplicationService.AddEventParticipant(eventParticipantDto, userId.Value);
         }
 
         [HttpGet]
@@ -31,8 +36,21 @@ namespace Eventify.WEB.Controllers
         [HttpDelete]
         public async Task<IActionResult> RemoveEventParticipant(EventParticipantDto eventParticipantDto)
         {
-            return await _eventParticipantsApplicationService.RemoveEventParticipant(eventParticipantDto);
+            var userId = GetUserIdFromHeaders();
+            if (userId == null)
+            {
+                return Unauthorized("User ID is required or invalid.");
+            }
+            return await _eventParticipantsApplicationService.RemoveEventParticipant(eventParticipantDto,userId.Value);
         }
+        private int? GetUserIdFromHeaders()
+        {
+            if (HttpContext.Request.Headers.TryGetValue("user-id", out var userIdValue) && int.TryParse(userIdValue, out var userId))
+            {
+                return userId;
+            }
 
+            return null;
+        }
     }
 }

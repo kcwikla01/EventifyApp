@@ -18,7 +18,7 @@ namespace Eventify.WEB.ApplicationServices
             _manageEventsReviewUoW = manageEventsReviewUoW;
             _manageEventsParticipantsUoW = manageEventsParticipantsUoW;
         }
-        public async Task<IActionResult> AddEventReview(EventReviewDto eventReviewDto)
+        public async Task<IActionResult> AddEventReview(EventReviewDto eventReviewDto, int userId)
         {
             if (eventReviewDto == null || eventReviewDto.EventId== null || eventReviewDto.Comment.Trim().Length==0 || eventReviewDto.UserId==0 || eventReviewDto.Rating==0)
             {

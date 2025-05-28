@@ -49,8 +49,13 @@ namespace Eventify.WEB.ApplicationServices
             return new OkObjectResult(_mapper.Map<UserDto>(user));
         }
 
-        public async Task<IActionResult> ChangePassword(UserDto userDto, string newPassword)
+        public async Task<IActionResult> ChangePassword(UserDto userDto, string newPassword, int userId)
         {
+            var user = await _manageUsersUoW.GetUserById(userId);
+            if (userDto.Id != userId || user.RoleId != 1)
+            {
+                return new UnauthorizedObjectResult("You are not authorized to change this password.");
+            }
             bool userExist = await _manageUsersUoW.CheckIfUserExist(userDto);
 
             if (!userExist)

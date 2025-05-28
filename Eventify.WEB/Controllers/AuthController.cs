@@ -23,18 +23,5 @@ namespace Eventify.WEB.Controllers
         {
             return await _loginApplicationService.Login(userDto);
         }
-
-        [HttpGet]
-        public async Task<IActionResult> AccessDenied()
-        {
-            return new UnauthorizedObjectResult("Acess denied");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Logout()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return Ok("Logged out");
-        }
     }
 }
