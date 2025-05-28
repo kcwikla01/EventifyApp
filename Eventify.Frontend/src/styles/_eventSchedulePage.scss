@@ -1,0 +1,197 @@
+﻿body {
+    background: linear-gradient(135deg, #f0f0f0, #dfe6e9);
+    color: #222;
+    transition: background 0.3s ease-in-out;
+}
+
+body.dark-mode {
+    background: linear-gradient(135deg, #0e0e1a, #1b1b2e);
+    color: #e0e0e0;
+}
+
+.event-schedule {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 80px 20px 40px;
+    min-height: 100vh;
+    transition: background 0.3s ease-in-out;
+
+    .schedule-container {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 40px;
+        width: 600px;
+        max-width: 90%;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease-in-out;
+
+        body.dark-mode & {
+            background: rgba(30, 34, 58, 0.95);
+            color: #f5f5f5;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+    }
+
+    h1 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 25px;
+        text-align: center;
+        color: #222;
+
+        body.dark-mode & {
+            color: #ffffff;
+        }
+    }
+
+    .activities-list {
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .activity-item {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease-in-out;
+
+            body.dark-mode & {
+                background: #2d3051;
+                box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+            }
+
+            h3 {
+                font-size: 1.3rem;
+                font-weight: bold;
+                margin-bottom: 10px;
+                color: #333;
+
+                body.dark-mode & {
+                    color: #f5f5f5;
+                }
+            }
+
+            p {
+                font-size: 1rem;
+                color: #555;
+                margin-bottom: 5px;
+
+                body.dark-mode & {
+                    color: #cccccc;
+                }
+            }
+        }
+    }
+
+    .error-message {
+        background-color: #ffe5e5;
+        color: #c70000;
+        border: 1px solid #ff4d4d;
+        padding: 12px 18px;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        text-align: center;
+        max-width: 400px;
+        margin-top: 20px;
+
+        body.dark-mode & {
+            background-color: #3b1f1f;
+            color: #ff9999;
+            border-color: #cc3333;
+        }
+    }
+
+    .submit-btn {
+        background: linear-gradient(135deg, #ff4081, #ff80ab);
+        color: white;
+        padding: 20px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-bottom: 10px;
+        margin-top: 20px; // 👈 Dodany odstęp od góry
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            background: linear-gradient(135deg, #e0005a, #ff4081);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 64, 129, 0.4);
+        }
+
+        body.dark-mode & {
+            background: linear-gradient(135deg, #4e54c8, #8f94fb);
+
+            &:hover {
+                background: linear-gradient(135deg, #3a3f92, #5c62d6);
+                box-shadow: 0 5px 15px rgba(79, 85, 200, 0.5);
+            }
+        }
+
+        @media (max-width: 768px) {
+            width: 100%;
+            max-width: 320px;
+            padding: 10px;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            max-width: 100%;
+            padding: 10px;
+            font-size: 0.95rem;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .event-schedule {
+        padding-top: 60px;
+
+        .schedule-container {
+            width: 90%;
+            padding: 30px;
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        .activity-item h3 {
+            font-size: 1.2rem;
+        }
+
+        .activity-item p {
+            font-size: 0.95rem;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .event-schedule {
+        .schedule-container {
+            padding: 25px;
+            width: 95%;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+        }
+
+        .activity-item h3 {
+            font-size: 1.1rem;
+        }
+
+        .activity-item p {
+            font-size: 0.9rem;
+        }
+    }
+}

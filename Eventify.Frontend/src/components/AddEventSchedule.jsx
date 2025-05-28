@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+﻿import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import "./../styles/_addEventPage.scss";
-import addEventTranslations from './../translations/addEventTranslations';
+import addEventTranslations from "./../translations/addEventTranslations";
 
-const AddEvent = ({ language }) => {
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
+const AddEventSchedule = ({ language }) => {
+    const [activityName, setActivityName] = useState("");
+    const [activityDescription, setActivityDescription] = useState("");
+    const [startTime, setStartTime] = useState("");
+    const [endTime, setEndTime] = useState("");
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
     const navigate = useNavigate();
+    const { eventId } = useParams();
     const translations = addEventTranslations[language];
-
     const currentDate = new Date().toISOString().slice(0, 16);
 
     useEffect(() => {
@@ -25,36 +25,34 @@ const AddEvent = ({ language }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const ownerId = localStorage.getItem("userId");
-
-        if (!name || !startDate || !endDate || !ownerId) {
+        if (!activityName || !startTime || !endTime || !eventId) {
             setError(translations.errorFillFields);
             setSuccess(null);
             return;
         }
 
-        if (new Date(startDate) >= new Date(endDate)) {
+        if (new Date(startTime) >= new Date(endTime)) {
             setError(translations.errorDate);
             setSuccess(null);
             return;
         }
 
-        const eventDto = {
-            name,
-            description,
-            startDate,
-            endDate,
-            ownerId: parseInt(ownerId)
+        const activityDto = {
+            activityId: 0,
+            eventId: parseInt(eventId),
+            activityName,
+            activityDescription,
+            startTime,
+            endTime,
         };
 
         try {
-            const response = await fetch(`https://localhost:7090/Event/CreateEvent`, {
+            const response = await fetch(`https://localhost:7090/EventShedules/AddEventActivity`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "user-id": ownerId,
                 },
-                body: JSON.stringify(eventDto),
+                body: JSON.stringify(activityDto),
             });
 
             if (!response.ok) {
@@ -66,7 +64,7 @@ const AddEvent = ({ language }) => {
             setError(null);
 
             setTimeout(() => {
-                navigate("/userDashboard");
+                navigate(`/manageSchedule/${eventId}`);
             }, 1500);
 
         } catch (err) {
@@ -75,79 +73,82 @@ const AddEvent = ({ language }) => {
         }
     };
 
+
     return (
         <div className="add-event-page">
             <div className="event-container">
-                <h1 className="form-title">{translations.formTitle}</h1>
-                <p className="form-subtitle">{translations.formSubtitle}</p>
+                <h1 className="form-title">
+                    {language === "pl" ? "Dodaj Harmonogram" : "Add Event Schedule"}
+                </h1>
+                <p className="form-subtitle">
+                    {language === "pl"
+                        ? "Wprowadź szczegóły aktywności wydarzenia"
+                        : "Enter event activity details"}
+                </p>
 
                 {error && <p className="error-message">{error}</p>}
                 {success && <p className="success-message">{success}</p>}
 
                 <form className="event-form" onSubmit={handleSubmit}>
                     <div className="input-group">
-                        <label htmlFor="name" className="input-label">
-                            {translations.eventNamePlaceholder}
+                        <label htmlFor="activityName" className="input-label">
+                            {language === "pl" ? "Nazwa aktywności" : "Activity Name"}
                         </label>
                         <input
-                            id="name"
+                            id="activityName"
                             type="text"
                             className="input-field"
-                            placeholder={translations.eventNamePlaceholder}
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={activityName}
+                            onChange={(e) => setActivityName(e.target.value)}
                             required
                         />
                     </div>
 
                     <div className="input-group">
-                        <label htmlFor="description" className="input-label">
-                            {translations.descriptionPlaceholder}
+                        <label htmlFor="activityDescription" className="input-label">
+                            {language === "pl" ? "Opis aktywności" : "Activity Description"}
                         </label>
                         <textarea
-                            id="description"
+                            id="activityDescription"
                             className="input-field"
-                            placeholder={translations.descriptionPlaceholder}
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
+                            value={activityDescription}
+                            onChange={(e) => setActivityDescription(e.target.value)}
                             rows={4}
                         />
                     </div>
 
                     <div className="input-group">
-                        <label htmlFor="startDate" className="input-label">
-                            {translations.startDatePlaceholder}
+                        <label htmlFor="startTime" className="input-label">
+                            {language === "pl" ? "Czas rozpoczęcia" : "Start Time"}
                         </label>
                         <input
-                            id="startDate"
+                            id="startTime"
                             type="datetime-local"
                             className="input-field"
-                            placeholder={translations.startDatePlaceholder}
-                            value={startDate}
-                            onChange={(e) => setStartDate(e.target.value)}
+                            value={startTime}
+                            onChange={(e) => setStartTime(e.target.value)}
                             min={currentDate}
                             required
                         />
                     </div>
 
                     <div className="input-group">
-                        <label htmlFor="endDate" className="input-label">
-                            {translations.endDatePlaceholder}
+                        <label htmlFor="endTime" className="input-label">
+                            {language === "pl" ? "Czas zakończenia" : "End Time"}
                         </label>
                         <input
-                            id="endDate"
+                            id="endTime"
                             type="datetime-local"
                             className="input-field"
-                            placeholder={translations.endDatePlaceholder}
-                            value={endDate}
-                            onChange={(e) => setEndDate(e.target.value)}
-                            min={currentDate}
+                            value={endTime}
+                            onChange={(e) => setEndTime(e.target.value)}
+                            min={startTime || currentDate}
                             required
                         />
                     </div>
 
                     <button type="submit" className="submit-btn">
-                        {translations.createEventButton}
+                        {language === "pl" ? "Dodaj aktywność" : "Add Activity"}
                     </button>
                 </form>
             </div>
@@ -155,4 +156,4 @@ const AddEvent = ({ language }) => {
     );
 };
 
-export default AddEvent;
+export default AddEventSchedule;

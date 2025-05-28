@@ -17,11 +17,14 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowLocalhost", builder =>
     {
-        builder.WithOrigins("http://localhost:5173")  // Frontend URL (React app)
-               .AllowAnyMethod()                    // Allow all HTTP methods (GET, POST, PUT, etc.)
-               .AllowAnyHeader();                   // Allow any headers (Content-Type, Authorization, etc.)
+        builder.WithOrigins("http://localhost:5173")
+            .AllowAnyMethod()               
+            .AllowAnyHeader()                 
+            .AllowCredentials();                
     });
 });
+
+builder.Services.AddHttpContextAccessor();
 
 // Add AutoMapper configuration
 builder.Services.AddAutoMapper(typeof(MapperProfile));
@@ -57,9 +60,9 @@ if (app.Environment.IsDevelopment())
 }
 
 // Enable CORS with the "AllowLocalhost" policy
-app.UseCors("AllowLocalhost");
 
 app.UseHttpsRedirection();
+app.UseCors("AllowLocalhost");
 app.UseAuthorization();
 
 app.MapControllers();  // Map controller routes

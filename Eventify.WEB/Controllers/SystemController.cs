@@ -1,4 +1,5 @@
 ﻿using Eventify.WEB.ApplicationServices.Base;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Eventify.WEB.Controllers

@@ -13,5 +13,7 @@ namespace Eventify.Database.Models.Dto
         public int CountOfParticipants { get; set; }
         public DateTime startTime { get; set; }
         public DateTime endTime { get; set; }
+        public double AverageRate { get; set; }
+        public List<String> Comments { get; set; }
     }
 }

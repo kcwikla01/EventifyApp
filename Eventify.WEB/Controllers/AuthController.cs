@@ -1,5 +1,8 @@
 ﻿using Eventify.Database.Models.Dto;
 using Eventify.WEB.ApplicationServices.Base;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Eventify.WEB.Controllers

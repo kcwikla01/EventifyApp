@@ -2,6 +2,7 @@
 using AutoMapper;
 using Eventify.Database.Models;
 using Eventify.Database.Models.Dto;
+using Eventify.UoW;
 using Eventify.UoW.Base;
 using Eventify.WEB.ApplicationServices.Base;
 using Microsoft.AspNetCore.Mvc;
@@ -12,20 +13,34 @@ namespace Eventify.WEB.ApplicationServices
     {
         private readonly IManageEventShedulesUoW _manageEventShedulesUoW;
         private readonly IManageEventsUoW _manageEventsUoW;
+        private readonly IManageUsersUoW _manageUsersUoW;
         private readonly IMapper _mapper;
 
-        public EventShedulesApplicationService(IManageEventShedulesUoW manageEventShedulesUoW, IManageEventsUoW manageEventsUoW, IMapper mapper)
+
+        public EventShedulesApplicationService(IManageEventShedulesUoW manageEventShedulesUoW, IManageEventsUoW manageEventsUoW, IMapper mapper, IManageUsersUoW manageUsersUoW)
         {
             _manageEventShedulesUoW = manageEventShedulesUoW;
             _manageEventsUoW = manageEventsUoW;
+            _manageUsersUoW = manageUsersUoW;
             _mapper = mapper;
         }
-        public async Task<IActionResult> RemoveActivity(int activityId)
+
+        public async Task<IActionResult> RemoveActivity(int activityId, int userId)
         {
+            var currentUser = await _manageUsersUoW.GetUserById(userId);
             var eventActivity = await _manageEventShedulesUoW.GetEventActivity(activityId);
             if (eventActivity == null)
             {
                 return new BadRequestObjectResult("Activity not found");
+            }
+            var findedEvent = await _manageEventsUoW.GetEventById(eventActivity.EventId);
+            if (findedEvent == null)
+            {
+                return new BadRequestObjectResult("Event not found");
+            }
+            if (findedEvent.OwnerId != userId && currentUser.RoleId != 1)
+            {
+                return new UnauthorizedObjectResult("You are not the owner of this event or an admin");
             }
 
             var isActivityRemoved = await _manageEventShedulesUoW.RemoveEventActivity(eventActivity);
@@ -49,12 +64,18 @@ namespace Eventify.WEB.ApplicationServices
             return new OkObjectResult(_mapper.Map<EventActivityDto>(eventActivity));
         }
 
-        public async Task<IActionResult> AddEventShedules(EventActivityDto eventActivityDto)
+        public async Task<IActionResult> AddEventShedules(EventActivityDto eventActivityDto, int userId)
         {
             var findEvent = await _manageEventsUoW.GetEventById(eventActivityDto.EventId);
             if (findEvent == null)
             {
                 return new BadRequestObjectResult("Event not found");
+            }
+
+            var currentUser = await _manageUsersUoW.GetUserById(userId);
+            if (findEvent.OwnerId != userId && currentUser.RoleId != 1)
+            {
+                return new UnauthorizedObjectResult("You are not the owner of this event or an admin");
             }
 
             var isValidDate = ValidateEventActivityDatetimes(findEvent, eventActivityDto);

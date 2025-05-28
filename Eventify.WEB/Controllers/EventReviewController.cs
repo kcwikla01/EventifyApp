@@ -1,4 +1,5 @@
-﻿using Eventify.WEB.ApplicationServices.Base;
+﻿using Eventify.Database.Models.Dto;
+using Eventify.WEB.ApplicationServices.Base;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,24 +7,24 @@ namespace Eventify.WEB.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class EventReportController : Controller
+    public class EventReviewController : Controller
     {
-        private readonly IEventReportApplicationService _eventReportApplicationService;
+        private readonly IEventReviewApplicationService _eventReviewApplicationService;
 
-        public EventReportController(IEventReportApplicationService eventReportApplicationService)
+        public EventReviewController(IEventReviewApplicationService eventReviewApplicationService)
         {
-            _eventReportApplicationService = eventReportApplicationService;
+            this._eventReviewApplicationService = eventReviewApplicationService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> GenerateReport(int eventId)
+        public async Task<IActionResult> AddEventReview(EventReviewDto eventReviewDto)
         {
             var userId = GetUserIdFromHeaders();
             if (userId == null)
             {
                 return Unauthorized("User ID is required or invalid.");
             }
-            return await _eventReportApplicationService.GenerateReport(eventId, userId.Value);
+            return await _eventReviewApplicationService.AddEventReview(eventReviewDto, userId.Value);
         }
 
         private int? GetUserIdFromHeaders()

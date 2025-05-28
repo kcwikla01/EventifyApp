@@ -121,6 +121,7 @@ body.dark-mode .event-date {
     color: #bbbbbb;
 }
 
+
 .view-details-btn {
     background: linear-gradient(135deg, #ff4081, #ff80ab);
     color: white;
@@ -133,6 +134,7 @@ body.dark-mode .event-date {
     transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
     margin-top: 10px;
 }
+
 
 .view-details-btn:hover {
     background: linear-gradient(135deg, #e0005a, #ff4081);
@@ -158,6 +160,24 @@ body.dark-mode .view-details-btn:hover {
     cursor: pointer;
     margin-top: 10px;
     transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+.generate-report-btn {
+    background: linear-gradient(135deg, #4caf50, #81c784);
+    color: white;
+    padding: 12px 18px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+    margin-top: 10px;
+}
+
+.generate-report-btn:hover {
+    background: linear-gradient(135deg, #388e3c, #66bb6a);
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
 }
 
 .update-event-btn {
@@ -237,37 +257,102 @@ body.dark-mode .add-event-btn:hover {
 @media (max-width: 768px) {
     .user-dashboard {
         flex-direction: column;
-        justify-content: flex-start;
         align-items: center;
+        padding: 10px;
     }
 
-    .events-section, .user-events-section, .joined-events-section {
-        width: 90%;
+    .dashboard-container {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .dashboard-header {
+        font-size: 2rem;
+    }
+
+    .add-event-btn {
+        font-size: 1rem;
+        width: 100%;
+        margin: 15px 0;
+        padding: 10px;
+    }
+
+    .sections-wrapper {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .left-column,
+    .right-column {
+        width: 100%;
+    }
+
+    .events-section,
+    .user-events-section,
+    .joined-events-section {
+        width: 100%;
+        padding: 15px;
+        margin: 0 auto;
     }
 
     .event-item {
         padding: 15px;
+        font-size: 0.95rem;
     }
 
     .event-name {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
     }
 
-    .view-details-btn, .add-event-btn {
+    .event-description,
+    .event-date {
+        font-size: 0.95rem;
+    }
+
+    .event-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .view-details-btn,
+    .update-event-btn,
+    .remove-event-btn {
+        width: 100%;
+        padding: 10px;
         font-size: 1rem;
     }
 }
 
 @media (max-width: 480px) {
-    .event-item {
-        padding: 12px;
+    .dashboard-header {
+        font-size: 1.6rem;
+    }
+
+    .add-event-btn {
+        font-size: 0.95rem;
+        padding: 10px;
     }
 
     .event-name {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
-    .view-details-btn, .add-event-btn {
+    .event-description,
+    .event-date {
         font-size: 0.9rem;
     }
+
+    .view-details-btn,
+    .update-event-btn,
+    .remove-event-btn {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+
+    .event-item {
+        padding: 12px;
+    }
 }
+
+

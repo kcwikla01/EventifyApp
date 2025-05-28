@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Eventify.Database.Models;
 using Eventify.Database.Models.Dto;
 using Eventify.UoW.Base;
 using Eventify.WEB.ApplicationServices.Base;
@@ -13,21 +14,28 @@ namespace Eventify.WEB.ApplicationServices
         private readonly IManageUsersUoW _manageUsersUoW;
         private readonly IMapper _mapper;
 
-        public EventApplicationService (IManageEventsUoW manageEventsUoW, IMapper mapper, IManageUsersUoW manageUsersUoW)
+
+        public EventApplicationService(IManageEventsUoW manageEventsUoW, IMapper mapper, IManageUsersUoW manageUsersUoW)
         {
             _manageEventsUoW = manageEventsUoW;
             _manageUsersUoW = manageUsersUoW;
             _mapper = mapper;
-        }
-        public async Task<IActionResult> CreateEvent(EventDto eventDto)
-        {
 
+        }
+
+        public async Task<IActionResult> CreateEvent(EventDto eventDto, int userId)
+        {
+            var currentUser = await _manageUsersUoW.GetUserById(userId);
+            if (eventDto.OwnerId != userId && currentUser.RoleId != 1)
+            {
+                return new UnauthorizedObjectResult("You are not owner of this event or admin");
+            }
             if (eventDto.Validate())
             {
                 if (eventDto.ValidateDates())
                 {
-                    var user = await _manageUsersUoW.GetUserById(eventDto.OwnerId);
-                    if (user == null)
+                    var userEntity = await _manageUsersUoW.GetUserById(eventDto.OwnerId);
+                    if (userEntity == null)
                     {
                         return new NotFoundObjectResult("Owner not exist");
                     }
@@ -75,19 +83,27 @@ namespace Eventify.WEB.ApplicationServices
             return new OkObjectResult(eventDtos);
         }
 
-        public async Task<IActionResult> GetEventsByOwnerId(int ownerId)
+        public async Task<IActionResult> GetEventsByOwnerId(int ownerId, int userId)
         {
-            var events = await _manageEventsUoW.GetEventsByOwnerId(ownerId);
-            var eventDtos = _mapper.Map<List<EventDto>>(events);
+            if (ownerId == userId)
+            {
+                var events = await _manageEventsUoW.GetEventsByOwnerId(ownerId);
+                var eventDtos = _mapper.Map<List<EventDto>>(events);
+                return new OkObjectResult(eventDtos);
+            }
 
-            return new OkObjectResult(eventDtos);
+            return new UnauthorizedObjectResult("User is not owner of this event");
         }
 
-        public async Task<IActionResult> RemoveEventById(int id)
+        public async Task<IActionResult> RemoveEventById(int id, int userId)
         {
             var eventById = await _manageEventsUoW.GetEventById(id);
-
-            if(eventById == null)
+            var currentUser = await _manageUsersUoW.GetUserById(userId);
+            if (eventById.OwnerId != userId && currentUser.RoleId != 1)
+            {
+                return new UnauthorizedObjectResult("You are not owner of this event or admin");
+            }
+            if (eventById == null)
             {
                 return new NotFoundObjectResult("Event not exist");
             }
@@ -103,10 +119,14 @@ namespace Eventify.WEB.ApplicationServices
             }
         }
 
-        public async Task<IActionResult> UpdateEventById(EventDto eventDto)
+        public async Task<IActionResult> UpdateEventById(EventDto eventDto, int userId)
         {
             var eventById = await _manageEventsUoW.GetEventById(eventDto.Id);
-
+            var currentUser = await _manageUsersUoW.GetUserById(userId);
+            if (eventById.OwnerId != userId && currentUser.RoleId != 1)
+            {
+                return new UnauthorizedObjectResult("You are not owner of this event or admin");
+            }
             if (eventById == null)
             {
                 return new NotFoundObjectResult("Event not exist");

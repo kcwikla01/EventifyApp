@@ -9,16 +9,21 @@ namespace Eventify.WEB.ApplicationServices
     {
         private readonly IManageEventsParticipantsUoW _manageEventsParticipantsUoW;
         private readonly IManageEventsUoW _manageEventsUoW;
+        private readonly IManageUsersUoW _manageUsersUoW;
 
-        public EventParticipantsApplicationService(IManageEventsParticipantsUoW manageEventsParticipantsUoW, IManageEventsUoW manageEventsUoW)
+        public EventParticipantsApplicationService(IManageEventsParticipantsUoW manageEventsParticipantsUoW, IManageEventsUoW manageEventsUoW, IManageUsersUoW manageUsersUoW)
         {
             _manageEventsParticipantsUoW = manageEventsParticipantsUoW;
             _manageEventsUoW = manageEventsUoW;
+            _manageUsersUoW = manageUsersUoW;
         }
 
-        public async Task<IActionResult> AddEventParticipant(EventParticipantDto eventParticipantDto)
+        public async Task<IActionResult> AddEventParticipant(EventParticipantDto eventParticipantDto, int userId)
         {
-
+            if(eventParticipantDto.UserId != userId)
+            {
+                return new BadRequestObjectResult("User ID does not match the authenticated user.");
+            }
             var checkIfExistThisLink = await _manageEventsParticipantsUoW.CheckIfExistLink(eventParticipantDto);
             if (checkIfExistThisLink)
             {
@@ -53,12 +58,18 @@ namespace Eventify.WEB.ApplicationServices
             return new OkObjectResult(events);
         }
 
-        public async Task<IActionResult> RemoveEventParticipant(EventParticipantDto eventParticipantDto)
+        public async Task<IActionResult> RemoveEventParticipant(EventParticipantDto eventParticipantDto, int userId)
         {
             var checkIfExistThisLink = await _manageEventsParticipantsUoW.CheckIfExistLink(eventParticipantDto);
             if (checkIfExistThisLink)
             {
-               var removed =  _manageEventsParticipantsUoW.RemoveEventParticipant(eventParticipantDto);
+                var findedEvent = await _manageEventsUoW.GetEventById(eventParticipantDto.EventId);
+                var findedUser = await _manageUsersUoW.GetUserById(userId);
+                if (findedEvent == null || findedEvent.OwnerId != userId || findedUser.RoleId != 1)
+                {
+                    return new BadRequestObjectResult("You are not the owner of this event");
+                }
+                var removed =  _manageEventsParticipantsUoW.RemoveEventParticipant(eventParticipantDto);
                 if(removed)
                 {
                     return new OkObjectResult("Link removed");
