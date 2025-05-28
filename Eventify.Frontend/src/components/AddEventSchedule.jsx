@@ -24,6 +24,8 @@ const AddEventSchedule = ({ language }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const ownerId = localStorage.getItem("userId");
+
 
         if (!activityName || !startTime || !endTime || !eventId) {
             setError(translations.errorFillFields);
@@ -51,6 +53,8 @@ const AddEventSchedule = ({ language }) => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "user-id": ownerId,
+
                 },
                 body: JSON.stringify(activityDto),
             });

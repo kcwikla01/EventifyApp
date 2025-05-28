@@ -9,6 +9,7 @@ const EventReport = ({ language }) => {
     const [eventDetails, setEventDetails] = useState(null);
     const [error, setError] = useState(null);
     const translations = eventReportTranslations[language];
+    const ownerId = localStorage.getItem("userId");
 
     useEffect(() => {
         const fetchEventReport = async () => {
@@ -18,6 +19,8 @@ const EventReport = ({ language }) => {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
+                        "user-id": ownerId,
+
                     },
                     body: JSON.stringify({ eventId }),
                 }
