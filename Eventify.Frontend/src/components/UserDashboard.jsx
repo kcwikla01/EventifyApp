@@ -59,7 +59,16 @@ const UserDashboard = ({ language }) => {
 
     const fetchAllEvents = async () => {
         try {
-            const response = await fetch(`https://localhost:7090/Event/GetEvents`);
+            const response = await fetch(
+                `https://localhost:7090/Event/GetEvents`,
+                {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "user-id": ownerId,
+                    },
+                }
+            );
             if (!response.ok) {
                 throw new Error("Failed to fetch events");
             }
@@ -70,9 +79,19 @@ const UserDashboard = ({ language }) => {
         }
     };
 
+
     const fetchJoinedEvents = async () => {
         try {
-            const response = await fetch(`https://localhost:7090/EventParticipants/GetAllEventsToWhichTheUserIsAssigned?userId=${ownerId}`);
+            const response = await fetch(
+                `https://localhost:7090/EventParticipants/GetAllEventsToWhichTheUserIsAssigned?userId=${ownerId}`,
+                {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "user-id": ownerId,
+                    },
+                }
+            );
             if (!response.ok) {
                 throw new Error("Failed to fetch joined events");
             }
@@ -83,12 +102,15 @@ const UserDashboard = ({ language }) => {
         }
     };
 
+
     const joinEvent = async (eventId) => {
         try {
             const response = await fetch(`https://localhost:7090/EventParticipants/AddEventParticipant`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "user-id": ownerId,
+
                 },
                 body: JSON.stringify({ userId: parseInt(ownerId), eventId }),
             });
@@ -107,6 +129,8 @@ const UserDashboard = ({ language }) => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    "user-id": ownerId,
+
                 },
                 body: JSON.stringify({ eventId }),
             });
@@ -148,6 +172,8 @@ const UserDashboard = ({ language }) => {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
+                    "user-id": ownerId,
+
                 },
                 body: JSON.stringify({ userId: parseInt(ownerId), eventId }),
             });

@@ -10,11 +10,19 @@ const ManageSchedule = ({ language }) => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const translations = manageScheduleTranslations[language];
+    const ownerId = localStorage.getItem("userId");
 
     const fetchActivities = async () => {
         try {
             const response = await fetch(
-                `https://localhost:7090/EventShedules/GetAllActivitiesForEvent?eventId=${eventId}`
+                `https://localhost:7090/EventShedules/GetAllActivitiesForEvent?eventId=${eventId}`,
+                {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "user-id": ownerId,
+                    },
+                }
             );
             if (!response.ok) throw new Error(translations.fetchError);
             const data = await response.json();
@@ -24,10 +32,18 @@ const ManageSchedule = ({ language }) => {
         }
     };
 
+
     const fetchActivityInfo = async (activityId) => {
         try {
             const response = await fetch(
-                `https://localhost:7090/EventShedules/GetEventActivityInfo?id=${activityId}`
+                `https://localhost:7090/EventShedules/GetEventActivityInfo?id=${activityId}`,
+                {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "user-id": ownerId,
+                    },
+                }
             );
             if (!response.ok) throw new Error(translations.fetchInfoError);
             const data = await response.json();
@@ -37,6 +53,7 @@ const ManageSchedule = ({ language }) => {
         }
     };
 
+
     const handleRemoveActivity = async (activityId) => {
         if (!window.confirm(translations.removeConfirm)) return;
         try {
@@ -44,6 +61,10 @@ const ManageSchedule = ({ language }) => {
                 `https://localhost:7090/EventShedules/RemoveEventActivity?activityId=${activityId}`,
                 {
                     method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "user-id": ownerId,
+                    },
                 }
             );
             if (!response.ok) throw new Error(translations.removeError);
@@ -52,6 +73,7 @@ const ManageSchedule = ({ language }) => {
             setError(err.message);
         }
     };
+
 
     useEffect(() => {
         fetchActivities();
