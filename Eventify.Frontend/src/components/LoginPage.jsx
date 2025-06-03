@@ -16,8 +16,14 @@ const Login = ({ language }) => {
     useEffect(() => {
         const expiresAt = localStorage.getItem("expiresAt");
         if (expiresAt && Date.now() < parseInt(expiresAt)) {
-            navigate("/userDashboard");
-        } else {
+            const role = localStorage.getItem("role");
+            if (role === "Admin") {
+                navigate("/adminDashboard");
+            } else {
+                navigate("/userDashboard");
+            }
+        }
+ else {
             localStorage.removeItem("userId");
             localStorage.removeItem("role");
             localStorage.removeItem("expiresAt");
@@ -59,13 +65,20 @@ const Login = ({ language }) => {
                 localStorage.setItem("userId", data.userId);
                 localStorage.setItem("role", data.roleName);
                 localStorage.setItem("expiresAt", expiresAt.toString());
+                localStorage.setItem("name", data.name);
 
                 setSuccess(`${translations.welcome}, ${username}!`);
                 setError(null);
 
                 setTimeout(() => {
-                    navigate("/userDashboard");
+                    window.dispatchEvent(new Event("userLoggedIn"));
+                    if (data.name === "Admin") {
+                        navigate("/adminDashboard");
+                    } else {
+                        navigate("/userDashboard");
+                    }
                 }, 1500);
+
             }
         } catch (err) {
             console.error("Login error:", err);

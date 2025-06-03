@@ -62,7 +62,12 @@ const EventReviewPage = ({ language }) => {
             setError(null);
 
             setTimeout(() => {
-                navigate("/userDashboard");
+                if (location.state && location.state.from) {
+                    navigate(location.state.from);
+                } else {
+                    const role = localStorage.getItem("name");
+                    navigate(role === "Admin" ? "/adminDashboard" : "/userDashboard");
+                }
             }, 1500);
 
         } catch (err) {
