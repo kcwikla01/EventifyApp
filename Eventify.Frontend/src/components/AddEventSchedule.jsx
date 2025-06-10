@@ -80,6 +80,13 @@ const AddEventSchedule = ({ language }) => {
 
     return (
         <div className="add-event-page">
+            <button
+                type="button"
+                className="back-btn"
+                onClick={() => navigate("/userDashboard")}
+            >
+                {translations.goToDashboardButton || "Go to Dashboard"}
+            </button>
             <div className="event-container">
                 <h1 className="form-title">
                     {language === "pl" ? "Dodaj Harmonogram" : "Add Event Schedule"}

@@ -1,4 +1,4 @@
-body {
+﻿body {
     background: linear-gradient(135deg, #f0f0f0, #dfe6e9);
     color: #222;
     transition: background 0.3s ease-in-out;
@@ -12,11 +12,12 @@ body.dark-mode {
 .add-event-page {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    height: 100vh;
-    transition: background 0.3s ease-in-out;
-    margin-top: 100px;
+    padding: 40px 20px;
+    min-height: 100vh;
+    box-sizing: border-box;
+
+
 
 
     .event-container {
@@ -105,6 +106,48 @@ body.dark-mode {
                     color: #cccccc;
                 }
             }
+        }
+    }
+
+    .back-btn {
+        background: linear-gradient(135deg, #ff4081, #ff80ab);
+        color: white;
+        padding: 20px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-bottom: 10px;
+        margin-top: 30px;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            background: linear-gradient(135deg, #e0005a, #ff4081);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 64, 129, 0.4);
+        }
+
+        body.dark-mode & {
+            background: linear-gradient(135deg, #4e54c8, #8f94fb);
+
+            &:hover {
+                background: linear-gradient(135deg, #3a3f92, #5c62d6);
+                box-shadow: 0 5px 15px rgba(79, 85, 200, 0.5);
+            }
+        }
+
+        @media (max-width: 768px) {
+            width: 100%;
+            max-width: 320px;
+            padding: 10px;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            max-width: 100%;
+            padding: 10px;
+            font-size: 0.95rem;
         }
     }
 
@@ -213,9 +256,11 @@ body.dark-mode {
             }
         }
     }
+
     .input-field[type="datetime-local"]::-webkit-calendar-picker-indicator {
         filter: invert(1) brightness(0) contrast(100%) !important;
     }
+
     .error-message {
         background-color: #ffe5e5;
         color: #c70000;

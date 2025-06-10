@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+Ôªøimport React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./../styles/_eventSchedulePage.scss";
 import eventScheduleTranslations from "./../translations/eventScheduleTranslations";
@@ -40,7 +40,7 @@ const EventSchedule = ({ language }) => {
     return (
         <div className="event-schedule">
             <button className="submit-btn" onClick={() => navigate("/userDashboard")}>
-                {language === "pl" ? "PowrÛt do panelu uøytkownika" : "Back to Dashboard"}
+                {language === "pl" ? "Powr√≥t do panelu u≈ºytkownika" : "Back to Dashboard"}
             </button>
             <div className="schedule-container">
                 <h1>{translations.pageTitle}</h1>

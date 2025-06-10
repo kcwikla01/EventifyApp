@@ -85,6 +85,14 @@ const AddEvent = ({ language }) => {
 
     return (
         <div className="add-event-page">
+            <button
+                type="button"
+                className="back-btn"
+                onClick={() => navigate("/userDashboard")}
+            >
+                {translations.goToDashboardButton || "Go to Dashboard"}
+            </button>
+
             <div className="event-container">
                 <h1 className="form-title">{translations.formTitle}</h1>
                 <p className="form-subtitle">{translations.formSubtitle}</p>

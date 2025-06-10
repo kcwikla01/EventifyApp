@@ -88,7 +88,6 @@ const AdminDashboard = ({ language }) => {
             setError(err.message);
         }
     };
-
     const leaveEvent = async (eventId) => {
         try {
             if (!adminId) {
@@ -96,11 +95,16 @@ const AdminDashboard = ({ language }) => {
                 return;
             }
 
-            const response = await fetch(`https://localhost:7090/EventParticipants/RemoveEventParticipant?userId=${adminId}&eventId=${eventId}`, {
+            const response = await fetch(`https://localhost:7090/EventParticipants/RemoveEventParticipant`, {
                 method: "DELETE",
                 headers: {
+                    "Content-Type": "application/json",
                     "user-id": adminId,
                 },
+                body: JSON.stringify({
+                    userId: parseInt(adminId),
+                    eventId: eventId,
+                }),
             });
 
             if (!response.ok) {
@@ -113,6 +117,7 @@ const AdminDashboard = ({ language }) => {
             setError(err.message);
         }
     };
+
 
     const handleRemoveEvent = async (id) => {
         if (!window.confirm(translations.deleteEventConfirmMessage)) return;

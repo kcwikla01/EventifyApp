@@ -19,6 +19,8 @@
         viewReportButton: "View raport",
         addReviewButton: "Add review",
         generateReportButton: "Generate report",
+        deleteEventErrorMessage: "This event cannot be deleted because it already has participants",
+
 
     },
     pl: {
@@ -41,6 +43,8 @@
         viewReportButton: "Zobacz raport",
         addReviewButton: "Dodaj opinie",
         generateReportButton: "Generuj raport",
+        deleteEventErrorMessage: "To wydarzenie nie może zostać usunięte, ponieważ ma już uczestników",
+
 
     }
 };

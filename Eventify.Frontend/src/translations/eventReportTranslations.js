@@ -1,4 +1,4 @@
-const eventReportTranslations = {
+ï»¿const eventReportTranslations = {
     en: {
         eventReportTitle: "Event Report",
         loading: "Loading event details...",
@@ -15,16 +15,16 @@ const eventReportTranslations = {
     },
     pl: {
         eventReportTitle: "Raport Wydarzenia",
-        loading: "£adowanie szczegó³ów wydarzenia...",
-        errorFetchingReport: "Wyst¹pi³ b³¹d podczas pobierania raportu wydarzenia. Spróbuj ponownie póŸniej.",
-        startTime: "Czas rozpoczêcia",
-        endTime: "Czas zakoñczenia",
+        loading: "Åadowanie szczegÃ³Å‚Ã³w wydarzenia...",
+        errorFetchingReport: "WystÄ…piÅ‚ bÅ‚Ä…d podczas pobierania raportu wydarzenia. SprÃ³buj ponownie pÃ³Åºniej.",
+        startTime: "Czas rozpoczÄ™cia",
+        endTime: "Czas zakoÅ„czenia",
         participants: "Uczestnicy",
-        averageRating: "Œrednia Ocena",
+        averageRating: "Åšrednia Ocena",
         downloadPDFButton: "Pobierz PDF",
-        backToDashboardButton: "Wróæ do panelu",
+        backToDashboardButton: "WrÃ³Ä‡ do panelu",
         comments: "Komentarze",
-        noComments: "Brak dostêpnych komentarzy."
+        noComments: "Brak dostÄ™pnych komentarzy."
 
     }
 };

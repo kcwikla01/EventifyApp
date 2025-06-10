@@ -1,4 +1,4 @@
-const eventScheduleTranslations = {
+ï»¿const eventScheduleTranslations = {
     en: {
         pageTitle: "Event Schedule",
         fetchError: "Failed to fetch activities. Please try again later.",
@@ -6,8 +6,8 @@ const eventScheduleTranslations = {
     },
     pl: {
         pageTitle: "Harmonogram wydarzenia",
-        fetchError: "Nie uda³o siê pobraæ aktywnoœci. Spróbuj ponownie póŸniej.",
-        noActivities: "Brak dostêpnych aktywnoœci dla tego wydarzenia.",
+        fetchError: "Nie udaÅ‚o siÄ™ pobraÄ‡ aktywnoÅ›ci. SprÃ³buj ponownie pÃ³Åºniej.",
+        noActivities: "Brak dostÄ™pnych aktywnoÅ›ci dla tego wydarzenia.",
     },
 };
 

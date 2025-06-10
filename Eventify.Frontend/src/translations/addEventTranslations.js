@@ -10,7 +10,9 @@
         errorFillFields: "Please fill in all required fields.",
         errorDate: "Start date must be before end date.",
         successMessage: "Event created successfully!",
+        goToDashboardButton: "Back to Dashboard",
         serverError: "Server error."
+
     },
     pl: {
         formTitle: "Utwórz Nowe Wydarzenie",
@@ -23,6 +25,7 @@
         errorFillFields: "Proszę wypełnić wszystkie wymagane pola.",
         errorDate: "Data rozpoczęcia musi być wcześniejsza niż data zakończenia.",
         successMessage: "Wydarzenie zostało utworzone pomyślnie!",
+        goToDashboardButton: "Powrót do panelu użytkownika",
         serverError: "Błąd serwera."
     }
 };
