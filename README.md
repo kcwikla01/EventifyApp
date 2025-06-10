@@ -4,4 +4,6 @@ We want to create a platform that works for all types of events, whether it’s 
 Before run application we should install sqlExpress or change SqlConnectionString at appsettings.json file <br>
 Next we should at package managare console at Eventify.Database project write this commands: <br>
 -dotnet tool install --global dotnet-ef <br>
--dotnet ef database update --startup-project ../Eventify.WEB --project .
+-dotnet ef database update --startup-project ../Eventify.WEB --project 
+
+Additionally, we should add the mail configuration to the appsettings.json file from which we want to send mail (we used gmail.com) to notify about joining events
