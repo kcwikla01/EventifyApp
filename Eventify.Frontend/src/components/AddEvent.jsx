@@ -66,8 +66,16 @@ const AddEvent = ({ language }) => {
             setError(null);
 
             setTimeout(() => {
-                navigate("/userDashboard");
+                if (location.state && location.state.from) {
+                    navigate(location.state.from);
+                } else {
+                    const role = localStorage.getItem("name");
+                    navigate(role === "Admin" ? "/adminDashboard" : "/userDashboard");
+                }
             }, 1500);
+
+
+
 
         } catch (err) {
             setError(err.message || translations.serverError);
@@ -77,6 +85,14 @@ const AddEvent = ({ language }) => {
 
     return (
         <div className="add-event-page">
+            <button
+                type="button"
+                className="back-btn"
+                onClick={() => navigate("/userDashboard")}
+            >
+                {translations.goToDashboardButton || "Go to Dashboard"}
+            </button>
+
             <div className="event-container">
                 <h1 className="form-title">{translations.formTitle}</h1>
                 <p className="form-subtitle">{translations.formSubtitle}</p>

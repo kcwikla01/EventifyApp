@@ -65,9 +65,9 @@ namespace Eventify.WEB.ApplicationServices
             {
                 var findedEvent = await _manageEventsUoW.GetEventById(eventParticipantDto.EventId);
                 var findedUser = await _manageUsersUoW.GetUserById(userId);
-                if (findedEvent == null || findedEvent.OwnerId != userId || findedUser.RoleId != 1)
+                if (findedEvent == null && (eventParticipantDto.UserId != userId || findedUser.RoleId != 1))
                 {
-                    return new BadRequestObjectResult("You are not the owner of this event");
+                    return new UnauthorizedObjectResult("You are not authorized to leave this event");
                 }
                 var removed =  _manageEventsParticipantsUoW.RemoveEventParticipant(eventParticipantDto);
                 if(removed)

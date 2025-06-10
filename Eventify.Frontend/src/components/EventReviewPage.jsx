@@ -22,6 +22,7 @@ const EventReviewPage = ({ language }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const ownerId = localStorage.getItem("userId");
 
         if (!rating) {
             setError(translations.ratingError);
@@ -45,7 +46,9 @@ const EventReviewPage = ({ language }) => {
             const response = await fetch(`https://localhost:7090/EventReview/AddEventReview`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "user-id": ownerId,
+
                 },
                 body: JSON.stringify(review)
             });
@@ -59,7 +62,12 @@ const EventReviewPage = ({ language }) => {
             setError(null);
 
             setTimeout(() => {
-                navigate("/userDashboard");
+                if (location.state && location.state.from) {
+                    navigate(location.state.from);
+                } else {
+                    const role = localStorage.getItem("name");
+                    navigate(role === "Admin" ? "/adminDashboard" : "/userDashboard");
+                }
             }, 1500);
 
         } catch (err) {

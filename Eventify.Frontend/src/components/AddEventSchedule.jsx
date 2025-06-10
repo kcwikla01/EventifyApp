@@ -24,6 +24,8 @@ const AddEventSchedule = ({ language }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const ownerId = localStorage.getItem("userId");
+
 
         if (!activityName || !startTime || !endTime || !eventId) {
             setError(translations.errorFillFields);
@@ -51,6 +53,8 @@ const AddEventSchedule = ({ language }) => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "user-id": ownerId,
+
                 },
                 body: JSON.stringify(activityDto),
             });
@@ -76,6 +80,13 @@ const AddEventSchedule = ({ language }) => {
 
     return (
         <div className="add-event-page">
+            <button
+                type="button"
+                className="back-btn"
+                onClick={() => navigate("/userDashboard")}
+            >
+                {translations.goToDashboardButton || "Go to Dashboard"}
+            </button>
             <div className="event-container">
                 <h1 className="form-title">
                     {language === "pl" ? "Dodaj Harmonogram" : "Add Event Schedule"}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+Ôªøimport React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./../styles/_eventSchedulePage.scss";
 import eventScheduleTranslations from "./../translations/eventScheduleTranslations";
@@ -9,11 +9,20 @@ const EventSchedule = ({ language }) => {
     const [activities, setActivities] = useState([]);
     const [error, setError] = useState(null);
     const translations = eventScheduleTranslations[language];
+    const ownerId = localStorage.getItem("userId");
+
 
     const fetchActivities = async () => {
         try {
             const response = await fetch(
-                `https://localhost:7090/EventShedules/GetAllActivitiesForEvent?eventId=${eventId}`
+                `https://localhost:7090/EventShedules/GetAllActivitiesForEvent?eventId=${eventId}`,
+                {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "user-id": ownerId,
+                    },
+                }
             );
             if (!response.ok) throw new Error(translations.fetchError);
             const data = await response.json();
@@ -23,6 +32,7 @@ const EventSchedule = ({ language }) => {
         }
     };
 
+
     useEffect(() => {
         fetchActivities();
     }, [eventId]);
@@ -30,7 +40,7 @@ const EventSchedule = ({ language }) => {
     return (
         <div className="event-schedule">
             <button className="submit-btn" onClick={() => navigate("/userDashboard")}>
-                {language === "pl" ? "PowrÛt do panelu uøytkownika" : "Back to Dashboard"}
+                {language === "pl" ? "Powr√≥t do panelu u≈ºytkownika" : "Back to Dashboard"}
             </button>
             <div className="schedule-container">
                 <h1>{translations.pageTitle}</h1>

@@ -22,9 +22,19 @@ const UpdateEvent = ({ language }) => {
     }, [navigate]);
 
     useEffect(() => {
+        const ownerId = localStorage.getItem("userId");
         const fetchEventData = async () => {
             try {
-                const response = await fetch(`https://localhost:7090/Event/GetEventById?id=${id}`);
+                const response = await fetch(
+                    `https://localhost:7090/Event/GetEventById?id=${id}`,
+                    {
+                        method: 'GET',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "user-id": ownerId,
+                        },
+                    }
+                );
                 if (!response.ok) throw new Error("Failed to fetch event data");
                 const data = await response.json();
                 setName(data.name);
@@ -38,6 +48,7 @@ const UpdateEvent = ({ language }) => {
         };
         fetchEventData();
     }, [id, translations.serverError]);
+
 
     const currentDate = new Date().toISOString().slice(0, 16);
 
