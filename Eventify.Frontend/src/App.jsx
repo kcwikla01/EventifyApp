@@ -102,6 +102,30 @@ function App() {
             setIsServerAvailable(false);
         }
     };
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const expiresAt = localStorage.getItem("expiresAt");
+            const userId = localStorage.getItem("userId");
+
+            if (!expiresAt || new Date().getTime() > Number(expiresAt)) {
+                if (userId) {
+                    localStorage.removeItem("userId");
+                    localStorage.removeItem("role");
+                    localStorage.removeItem("expiresAt");
+                    setIsLoggedIn(false);
+
+                    if (location.pathname !== '/login') {
+                        navigate('/login');
+                    }
+                }
+            } else {
+                setIsLoggedIn(!!userId);
+            }
+        }, 10000);
+
+        return () => clearInterval(interval);
+    }, [location.pathname, navigate]);
+
 
     useEffect(() => {
         checkServerAvailability();

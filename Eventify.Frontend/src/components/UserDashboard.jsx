@@ -9,7 +9,7 @@ const UserDashboard = ({ language }) => {
     const [events, setEvents] = useState([]);
     const [userEvents, setUserEvents] = useState([]);
     const [joinedEvents, setJoinedEvents] = useState([]);
-    const [error, setError] = useState(null);
+    const [, setError] = useState(null);
     const navigate = useNavigate();
     const translations = userDashboardTranslations[language];
     const ownerId = localStorage.getItem("userId");
@@ -161,21 +161,20 @@ const UserDashboard = ({ language }) => {
 
     const leaveEvent = async (eventId) => {
         try {
-            if (!ownerId) {
-                setError("User ID is missing");
-                return;
-            }
-
-            const response = await fetch(`https://localhost:7090/EventParticipants/RemoveEventParticipant?userId=${ownerId}&eventId=${eventId}`, {
+            const response = await fetch(`https://localhost:7090/EventParticipants/RemoveEventParticipant`, {
                 method: "DELETE",
                 headers: {
+                    "Content-Type": "application/json",
                     "user-id": ownerId,
                 },
+                body: JSON.stringify({
+                    userId: parseInt(ownerId),
+                    eventId: eventId
+                }),
             });
 
             if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`Failed to leave event: ${response.status} - ${errorText}`);
+                throw new Error("Failed to leave event");
             }
 
             await fetchJoinedEvents();
@@ -183,10 +182,6 @@ const UserDashboard = ({ language }) => {
             setError(err.message);
         }
     };
-
-
-
-
 
     useEffect(() => {
         fetchAllEvents();
@@ -213,12 +208,13 @@ const UserDashboard = ({ language }) => {
                 },
             });
             if (!response.ok) {
-                throw new Error("Failed to remove event");
+                throw new Error(translations.deleteEventErrorMessage); // u¿ycie t³umaczenia
             }
             fetchUserEvents();
             fetchAllEvents();
         } catch (err) {
-            setError(err.message);
+            alert(err.message); // wyœwietl komunikat w oknie z przyciskiem OK
+            setError(err.message); // opcjonalnie aktualizuj stan b³êdu
         }
     };
 
@@ -240,7 +236,6 @@ const UserDashboard = ({ language }) => {
                     {translations.addEventButton}
                 </button>
 
-                {error && <p className="error-message">{translations.errorFetchingEvents}</p>}
 
                 <div className="sections-wrapper">
                     <div className="left-column">
